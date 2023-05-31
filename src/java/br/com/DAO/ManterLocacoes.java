@@ -1,0 +1,147 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.DAO;
+
+import br.com.controle.Contador;
+import br.com.controle.Locacoes;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Tonilson
+ */
+public class ManterLocacoes extends DAO{
+    
+    public ArrayList<Locacoes> pesquisaTudoLocacoes(){
+        ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
+        try {
+            abrirBanco();
+            String query = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+                            "FROM locacoes as L\n" +
+                            "inner join veiculos as V ON L.veiculos_id = V.id\n" +
+                            "inner join cliente as C ON L.clientes_id = C.id\n" +
+                            "inner join cores as CR ON V.cores_id = CR.id\n" +
+                            "inner join modelos as M ON L.veiculos_id = M.id;";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Locacoes vei;
+            while(rs.next()){
+                vei = new Locacoes();
+                vei.setCodigo(rs.getInt("id"));
+                vei.setData_inicio(rs.getString("data_inicio"));
+                vei.setData_termino(rs.getString("data_termino"));
+                vei.setData_inicioFormat(rs.getString("dataInicioFormat"));
+                vei.setData_terminoFormat(rs.getString("dataTerminoFormat"));
+                vei.setValor_diaria(rs.getDouble("valor_diaria"));
+                vei.setValor_locacao(rs.getDouble("valor_locacao"));
+                vei.setValor_pago(rs.getDouble("valor_pago"));
+                vei.setStatusLocacoes(rs.getString("status_locacao"));
+                vei.setPlaca_id(rs.getInt("veiculos_id"));
+                vei.setCliente_id(rs.getInt("clientes_id"));
+                vei.setCliente(rs.getString("Cliente"));
+                vei.setCor(rs.getString("Cor"));
+                vei.setPlaca(rs.getString("Placa"));
+                vei.setModelo(rs.getString("Modelo"));
+                lista.add(vei);
+            }
+            fecharBanco();
+             
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return lista;
+    }
+    
+    public void deletarLocacao(Locacoes c){
+        try {
+            abrirBanco();
+            String query = "DELETE FROM locacoes where id=?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, c.getCodigo());
+            ps.execute();
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Erro"+ e.getMessage());
+        }
+    }
+    
+    public void cadastrarLocacao(Locacoes c){
+         try {
+             abrirBanco();
+             String query = "INSERT INTO locacoes(id,data_inicio,data_termino,valor_diaria,valor_locacao ,valor_pago ,status_locacao,veiculos_id,clientes_id) values(null,?,?,?,?,?,?,?,?) ";
+             ps = con.prepareStatement(query);
+             ps.setString(1,c.getData_inicio());
+             ps.setString(2, c.getData_termino());
+             ps.setDouble(3, c.getValor_diaria());
+             ps.setDouble(4, c.getValor_locacao());
+             ps.setDouble(5, c.getValor_pago());
+             ps.setString(6, c.getStatusLocacoes());
+             ps.setInt(7, c.getPlaca_id());
+             ps.setInt(8,c.getCliente_id());
+             ps.execute();
+             fecharBanco();
+         } catch (Exception e) {
+             System.out.println("Error"+ e.getMessage());
+         }
+    }
+    
+    public void editarLocacoes(Locacoes c){
+        try {
+            abrirBanco();
+            String query="UPDATE locacoes set data_inicio =?, data_termino = ?,valor_diaria = ?, valor_locacao=?, valor_pago= ?,status_locacao= ?,veiculos_id= ?,clientes_id= ?  where id=?";
+            ps= con.prepareStatement(query);
+            ps.setString(1, c.getData_inicio());
+            ps.setString(2, c.getData_termino());
+            ps.setDouble(3, c.getValor_diaria());
+            ps.setDouble(4, c.getValor_locacao());
+            ps.setDouble(5, c.getValor_pago());
+            ps.setString(6, c.getStatusLocacoes());
+            ps.setInt(7, c.getPlaca_id());
+            ps.setInt(8, c.getCliente_id());
+            ps.setInt(9, c.getCodigo());
+            ps.executeUpdate();
+            fecharBanco();
+            
+        } catch (Exception e) {
+            System.out.println("Erro"+ e.getMessage());
+        }
+    }
+    
+    public void pagamentoLocacao(Locacoes c){
+        try {
+            abrirBanco();
+            String query="UPDATE locacoes set valor_pago= ? where id=?";
+            ps= con.prepareStatement(query);
+            ps.setDouble(1, c.getValor_pago());
+            ps.setInt(2, c.getCodigo());
+            ps.executeUpdate();
+            fecharBanco();
+            
+        } catch (Exception e) {
+            System.out.println("Erro"+ e.getMessage());
+        }
+    }
+    
+   public Contador totalLocacoes(){
+       Contador cont = new Contador();
+       try {
+           abrirBanco();
+           String query ="select count(id) as total_locacoes from locacoes ; ";
+           ps= con.prepareStatement(query);
+           ResultSet rs = ps.executeQuery();
+           cont.setContador(rs.getString("total_locacoes"));
+           fecharBanco();
+           return cont;
+       } catch (Exception e) {
+       }
+       
+       return null;
+   }
+    
+    
+    
+}
