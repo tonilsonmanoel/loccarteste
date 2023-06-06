@@ -710,7 +710,7 @@
                 <!-- Iniciar tabela -->
                 <div class="row my-5 ">
                     <div class="row position-relative">
-                        <h3 class="fs-4 mb-3 text-dark">Garagem</h3>
+                        <h3 class="fs-4 mb-3 text-success">Garagem</h3>
                         <button type="button" class="btn btn-primary  botao_cadastrar position-absolute top-50 end-0 translate-middle-y " data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
                     </div>
                     <div class="col">

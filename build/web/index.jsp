@@ -322,7 +322,7 @@
                 
                 <div class="row my-3 ">
                     <div class="row position-relative">
-                        <h3 class="fs-4 mb-3 text-dark col ">Locações Ativas</h3>
+                        <h3 class="fs-4 mb-3 text-success col ">Locações Ativas</h3>
                         
                         <button type="button" class="btn btn-primary botao_cadastrar " style ="margin-right: 10px; width: 150px; " data-bs-toggle="modal" data-bs-target="#ModalPagamento">Pagamento</button>
                         <button type="button" class="btn btn-primary  botao_cadastrar col "  data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>

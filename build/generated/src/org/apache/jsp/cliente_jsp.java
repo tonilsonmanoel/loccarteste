@@ -213,7 +213,7 @@ public final class cliente_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                \n");
       out.write("                <div class=\"row my-5 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
-      out.write("                        <h3 class=\"fs-4 mb-3 text-dark\">Clientes</h3>\n");
+      out.write("                        <h3 class=\"fs-4 mb-3 text-success border border-white\">Clientes</h3>\n");
       out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar position-absolute top-50 end-0 translate-middle-y \" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">Cadastrar</button>\n");
       out.write("                    </div>\n");
       out.write("                    <div class=\"col\">\n");
