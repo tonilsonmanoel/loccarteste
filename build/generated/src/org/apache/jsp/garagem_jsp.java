@@ -102,45 +102,15 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        </div>\n");
       out.write("                        <div class=\"row\">\n");
       out.write("                            <div class=\"form-group margin-input col\">\n");
-      out.write("                                <label for=\"exampleInputText\">Marca</label>\n");
-      out.write("                            <select class=\"form-select\" aria-label=\"Default select example\" name=\"marca\">\n");
-      out.write("                                    <option selected>Selecioner a marca</option>\n");
-      out.write("                            ");
-  
-                                String marcaNome = "";
-                                String marcaId = "";
-                                
-                                ManterMarca marcaDao = new ManterMarca();
-                                Marca marca = new Marca();
-                                ArrayList<Marca> arryMarca = marcaDao.pesquisaTudoMarca();
-                                
-                                for(int i = 0; i < arryMarca.size();i++){
-                                    marca = arryMarca.get(i);
-                                    marcaNome = marca.getNome();
-                                    marcaId = String.valueOf(marca.getCodigo());
-                                    
-                            
-      out.write("\n");
-      out.write("                                    <option value=\"");
-      out.print(marcaId);
-      out.write('"');
-      out.write('>');
-      out.print(marcaNome);
-      out.write("</option>\n");
-      out.write("                                    \n");
-      out.write("                                ");
- } 
-      out.write("\n");
-      out.write("                            </select>\n");
-      out.write("                            </div>\n");
-      out.write("                            <div class=\"form-group margin-input col\">\n");
-      out.write("                                <label for=\"exampleInputText\">Modelo</label>\n");
+      out.write("                                <label for=\"exampleInputText\">Modelo Veiculo</label>\n");
       out.write("                                <select class=\"form-select\" aria-label=\"Default select example\" name=\"modelo\">\n");
-      out.write("                                        <option selected>Selecioner o modelo</option>\n");
+      out.write("                                        <option selected>Selecioner o modelo do veiculo</option>\n");
       out.write("                                ");
   
                                     String modeloNome = "";
                                     String modeloId = "";
+                                    String marcasID = "";
+                                    String marcasNome="";
                                     
                                     ManterModelo modelodao = new ManterModelo();
                                     Modelo modelo = new Modelo();
@@ -150,13 +120,15 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
                                         modelo = arryModelo.get(a);
                                         modeloNome = modelo.getNome();
                                         modeloId = String.valueOf(modelo.getId());
+                                        marcasNome = String.valueOf(modelo.getMarca());
                                 
       out.write("\n");
       out.write("                                        <option value=\"");
       out.print(modeloId);
-      out.write('"');
-      out.write('>');
+      out.write("\">Modelo: ");
       out.print(modeloNome);
+      out.write(" | Marca: ");
+      out.print(marcasNome);
       out.write("</option>\n");
       out.write("\n");
       out.write("                                    ");
@@ -208,6 +180,562 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </div>\n");
       out.write("         <!-- Fim Modal Cadastro-->\n");
       out.write("         \n");
+      out.write("        \n");
+      out.write("       \n");
+      out.write("         <!-- Modal Marcas -->\n");
+      out.write("         \n");
+      out.write("         <div class=\"modal fade\" id=\"ModalMarca\">\n");
+      out.write("            <div class=\"modal-dialog modal-lg modal-dialog-scrollable\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"DSLabel\">Marcas</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\">\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-body \">\n");
+      out.write("                       <table class=\"table bg-white rounded shadow-sm  table-hover\">\n");
+      out.write("                                    <thead>\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">#</th>\n");
+      out.write("                                            <th scope=\"col\">Nome</th>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">Apagar</th>\n");
+      out.write("                                            \n");
+      out.write("                                        </tr>\n");
+      out.write("                                    </thead>\n");
+      out.write("                                    <tbody>\n");
+      out.write("            ");
+
+                        String vidMarca = "";
+                        String vnomeMarca = "";
+
+                        ManterMarca daoMarca =new ManterMarca();
+                        Marca marcaobj = new Marca();
+
+
+                        ArrayList<Marca> nt23 = daoMarca.pesquisaTudoMarca();
+
+                    for(int i3 = 0; i3 < nt23.size(); i3++){
+                        marcaobj = nt23.get(i3);
+                        vidMarca = String.valueOf(marcaobj.getCodigo());
+                        vnomeMarca = String.valueOf(marcaobj.getNome());
+                                                                            
+      out.write("\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"row\">");
+      out.print(vidMarca);
+      out.write("</th>\n");
+      out.write("                                            <td>");
+      out.print(vnomeMarca);
+      out.write("</td>\n");
+      out.write("                                            <td class=\"\"><a href=\"DeletarMarca?id=");
+      out.print(vidMarca);
+      out.write("\" onclick=\"return confirm('Confirma exclusão do registro ");
+      out.print(vnomeMarca);
+      out.write("?')\"><i class=\"fas fa-solid fa-trash me-2 d-flex justify-content-center \" style=\"color: #ff0000;\"></i></a></td>\n");
+      out.write("                                        </tr>\n");
+      out.write("                                ");
+  }   
+      out.write("\n");
+      out.write("\n");
+      out.write("                                    </tbody>\n");
+      out.write("                                </table>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Fechar</button>\n");
+      out.write("                        <button class=\"btn btn-primary\"data-bs-target=\"#ModalCadastrarMarca\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Cadastrar\n");
+      out.write("                        </button>\n");
+      out.write("                         <button class=\"btn btn-primary\"data-bs-target=\"#ModalEditarMarca\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Editar\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("                                \n");
+      out.write("        <!-- Modal Cadastro Marcas -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalCadastrarMarca\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Cadastrar Marca</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"CadastroMarca\" method=\"POST\">\n");
+      out.write("                        <div class=\"form-group margin-input\">\n");
+      out.write("                            <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                            <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalMarca\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Cadastrar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim Modal Marca Cadastro -->\n");
+      out.write("        \n");
+      out.write("        <!-- Modal Editar Marcas -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalEditarMarca\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog \">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Editar Marca</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"EditarMarca\" method=\"POST\">\n");
+      out.write("                        <div class=\"form-group margin-input\">\n");
+      out.write("                             <label for=\"exampleInputText\">Marca</label>\n");
+      out.write("                              <select class=\"form-select\" aria-label=\"Default select example\" name=\"idmarca\">\n");
+      out.write("                                <option selected>Selecione a marca </option>\n");
+      out.write("                                                    ");
+  
+                                                        String marcaNome3 = "";
+                                                        String marcaId3 = "";
+
+                                                        ManterMarca marcaDao3 = new ManterMarca();
+                                                        Marca marca3= new Marca();
+                                                        ArrayList<Marca> arryMarca3 = marcaDao3.pesquisaTudoMarca();
+
+                                                        for(int i3 = 0; i3 < arryMarca3.size();i3++){
+                                                            marca3 = arryMarca3.get(i3);
+                                                            marcaNome3 = marca3.getNome();
+                                                            marcaId3 = String.valueOf(marca3.getCodigo());
+
+                                                    
+      out.write("\n");
+      out.write("                                     <option value=\"");
+      out.print(marcaId3);
+      out.write('"');
+      out.write('>');
+      out.print(marcaNome3);
+      out.write("</option>\n");
+      out.write("\n");
+      out.write("                                      ");
+ } 
+      out.write("\n");
+      out.write("                                       </select>\n");
+      out.write("                        </div>   \n");
+      out.write("                        <div class=\"form-group margin-input\">\n");
+      out.write("                            <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                            <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalMarca\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Editar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim editar Marcas -->\n");
+      out.write("         <!-- Fim Modal Marcas -->\n");
+      out.write("         \n");
+      out.write("         \n");
+      out.write("         <!-- Modal Modelo -->\n");
+      out.write("         \n");
+      out.write("         <div class=\"modal fade\" id=\"ModalModelo\">\n");
+      out.write("            <div class=\"modal-dialog modal-lg modal-dialog-scrollable\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"DSLabel\">Modelo</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\">\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-body \">\n");
+      out.write("                       <table class=\"table bg-white rounded shadow-sm  table-hover\">\n");
+      out.write("                                    <thead>\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">#</th>\n");
+      out.write("                                            <th scope=\"col\">Nome</th>\n");
+      out.write("                                            <th scope=\"col\">Marca</th>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">Apagar</th>\n");
+      out.write("                                            \n");
+      out.write("                                        </tr>\n");
+      out.write("                                    </thead>\n");
+      out.write("                                    <tbody>\n");
+      out.write("            ");
+
+                        String vidModelo = "";
+                        String vnomeModelo = "";
+                        String vnomeMarcaId = "";
+                        String vnomeMarcaM = "";
+                        
+                        ManterModelo daoModelo = new ManterModelo();
+                        Modelo modeloobj = new Modelo();
+
+                        ArrayList<Modelo> ntModelo = daoModelo.pesquisaTudoModelo();
+
+                    for(int imodelo = 0; imodelo < ntModelo.size(); imodelo++){
+                        modeloobj = ntModelo.get(imodelo);
+                        vidModelo = String.valueOf(modeloobj.getId());
+                        vnomeModelo = String.valueOf(modeloobj.getNome());
+                        vnomeMarcaId = String.valueOf(modeloobj.getMarcas_id());
+                        vnomeMarcaM = String.valueOf(modeloobj.getMarca());
+                        
+                                                                            
+      out.write("\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"row\">");
+      out.print(vidModelo);
+      out.write("</th>\n");
+      out.write("                                            <td>");
+      out.print(vnomeModelo);
+      out.write("</td>\n");
+      out.write("                                            <td>");
+      out.print(vnomeMarcaM);
+      out.write("</td>\n");
+      out.write("                                            <td class=\"\"><a href=\"DeletarModelo?id=");
+      out.print(vidModelo);
+      out.write("\" onclick=\"return confirm('Confirma exclusão do registro ");
+      out.print(vnomeModelo);
+      out.write("?')\"><i class=\"fas fa-solid fa-trash me-2 d-flex justify-content-center \" style=\"color: #ff0000;\"></i></a></td>\n");
+      out.write("                                        </tr>\n");
+      out.write("                                ");
+  }   
+      out.write("\n");
+      out.write("\n");
+      out.write("                                    </tbody>\n");
+      out.write("                                </table>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Fechar</button>\n");
+      out.write("                        <button class=\"btn btn-primary\"data-bs-target=\"#ModalCadastrarModelo\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Cadastrar\n");
+      out.write("                        </button>\n");
+      out.write("                         <button class=\"btn btn-primary\"data-bs-target=\"#ModalEditarModelo\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Editar\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("                                \n");
+      out.write("        <!-- Modal Cadastro Modelo -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalCadastrarModelo\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Cadastrar Modelo</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"CadastroModelo\" method=\"POST\">\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                            </div>\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                             <label for=\"exampleInputText\">Marca</label>\n");
+      out.write("                              <select class=\"form-select\" aria-label=\"Default select example\" name=\"idmarca\">\n");
+      out.write("                                <option selected>Selecione a marca </option>\n");
+      out.write("                                                    ");
+  
+                                                        String marcaNomeModelo = "";
+                                                        String marcaIdModelo = "";
+
+                                                        ManterMarca marcaDaoModelo = new ManterMarca();
+                                                        Marca marcaModeloCadastro = new Marca();
+                                                        
+                                                        ArrayList<Marca> arryMarcaModelo = marcaDaoModelo.pesquisaTudoMarca();
+
+                                                        for(int a = 0; a < arryMarcaModelo.size();a++){
+                                                            marcaModeloCadastro = arryMarcaModelo.get(a);
+                                                            marcaNomeModelo = marcaModeloCadastro.getNome();
+                                                            marcaIdModelo = String.valueOf(marcaModeloCadastro.getCodigo());
+
+                                                    
+      out.write("\n");
+      out.write("                                     <option value=\"");
+      out.print(marcaIdModelo);
+      out.write('"');
+      out.write('>');
+      out.print(marcaNomeModelo);
+      out.write("</option>\n");
+      out.write("\n");
+      out.write("                                      ");
+ } 
+      out.write("\n");
+      out.write("                                       </select>\n");
+      out.write("                                </div>   \n");
+      out.write("                            \n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalModelo\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Cadastrar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim Modal Modelo Cadastro -->\n");
+      out.write("        \n");
+      out.write("        <!-- Modal Editar Modelo -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalEditarModelo\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog \">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Editar Modelo</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"EditarModelo\" method=\"POST\">\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                  <label for=\"exampleInputText\">Modelo o modelo para editar</label>\n");
+      out.write("                                  <select class=\"form-select\" aria-label=\"Default select example\" name=\"idModelo\">\n");
+      out.write("                                    <option selected>Selecione o modelo </option>\n");
+      out.write("                                                        ");
+  
+                                                            String nomeModeloEditar= "";
+                                                            String idModeloEditar = "";
+                                                            
+                                                            ManterModelo modeloDaoEditar = new ManterModelo();
+                                                            Modelo modeloEditar  = new Modelo();
+                                                            ArrayList<Modelo> arryModeloEditar = modeloDaoEditar.pesquisaTudoModelo();
+
+                                                            for(int i3 = 0; i3 < arryModeloEditar.size();i3++){
+                                                                modeloEditar = arryModeloEditar.get(i3);
+                                                                nomeModeloEditar = modeloEditar.getNome();
+                                                                idModeloEditar = String.valueOf(modeloEditar.getId());
+
+                                                        
+      out.write("\n");
+      out.write("                                         <option value=\"");
+      out.print(idModeloEditar);
+      out.write('"');
+      out.write('>');
+      out.print(nomeModeloEditar);
+      out.write("</option>\n");
+      out.write("\n");
+      out.write("                                          ");
+ } 
+      out.write("\n");
+      out.write("                                           </select>\n");
+      out.write("                            </div>\n");
+      out.write("                                 \n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                            </div>               \n");
+      out.write("                                           \n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                  <label for=\"exampleInputText\">Marca</label>\n");
+      out.write("                                  <select class=\"form-select\" aria-label=\"Default select example\" name=\"idmarca\">\n");
+      out.write("                                    <option selected>Selecione a marca </option>\n");
+      out.write("                                                        ");
+  
+                                                            String marcaNomeModelo2 = "";
+                                                            String marcaIdModelo2 = "";
+
+                                                            Marca marcaModelo2= new Marca();
+                                                            ArrayList<Marca> arryMarcaModelo3 = marcaDaoModelo.pesquisaTudoMarca();
+
+                                                            for(int i3 = 0; i3 < arryMarcaModelo3.size();i3++){
+                                                                marcaModelo2 = arryMarcaModelo3.get(i3);
+                                                                marcaNomeModelo2 = marcaModelo2.getNome();
+                                                                marcaIdModelo2 = String.valueOf(marcaModelo2.getCodigo());
+
+                                                        
+      out.write("\n");
+      out.write("                                         <option value=\"");
+      out.print(marcaIdModelo2);
+      out.write('"');
+      out.write('>');
+      out.print(marcaNomeModelo2);
+      out.write("</option>\n");
+      out.write("\n");
+      out.write("                                          ");
+ } 
+      out.write("\n");
+      out.write("                                           </select>\n");
+      out.write("                            </div>   \n");
+      out.write("                            \n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalModelo\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Editar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim editar Modelo -->\n");
+      out.write("         <!-- Fim Modal Modelo -->\n");
+      out.write("         \n");
+      out.write("         \n");
+      out.write("         <!-- Modal Cores -->\n");
+      out.write("         \n");
+      out.write("         <div class=\"modal fade\" id=\"ModalCores\">\n");
+      out.write("            <div class=\"modal-dialog modal-lg modal-dialog-scrollable\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"DSLabel\">Cor</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\">\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-body \">\n");
+      out.write("                       <table class=\"table bg-white rounded shadow-sm  table-hover\">\n");
+      out.write("                                    <thead>\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">#</th>\n");
+      out.write("                                            <th scope=\"col\">Nome</th>\n");
+      out.write("                                            <th scope=\"col\" width=\"50\">Apagar</th>\n");
+      out.write("                                            \n");
+      out.write("                                        </tr>\n");
+      out.write("                                    </thead>\n");
+      out.write("                                    <tbody>\n");
+      out.write("            ");
+
+                        String vidCor = "";
+                        String vnomeCor = "";
+                        
+                        ManterCor daoCor = new ManterCor();
+                        Cor corobj = new Cor();
+
+                        ArrayList<Cor> ntCor = daoCor.pesquisaTudoCor();
+
+                    for(int iCor = 0; iCor < ntCor.size(); iCor++){
+                        corobj = ntCor.get(iCor);
+                        vidCor = String.valueOf(corobj.getCodigo());
+                        vnomeCor = String.valueOf(corobj.getNome());
+                        
+                        
+                                                                            
+      out.write("\n");
+      out.write("                                        <tr>\n");
+      out.write("                                            <th scope=\"row\">");
+      out.print(vidCor);
+      out.write("</th>\n");
+      out.write("                                            <td>");
+      out.print(vnomeCor);
+      out.write("</td>\n");
+      out.write("                                            <td class=\"\"><a href=\"DeletaCor?id=");
+      out.print(vidCor);
+      out.write("\" onclick=\"return confirm('Confirma exclusão do registro ");
+      out.print(vnomeCor);
+      out.write("?')\"><i class=\"fas fa-solid fa-trash me-2 d-flex justify-content-center \" style=\"color: #ff0000;\"></i></a></td>\n");
+      out.write("                                        </tr>\n");
+      out.write("                                ");
+  }   
+      out.write("\n");
+      out.write("\n");
+      out.write("                                    </tbody>\n");
+      out.write("                                </table>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Fechar</button>\n");
+      out.write("                        <button class=\"btn btn-primary\"data-bs-target=\"#ModalCadastrarCor\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Cadastrar\n");
+      out.write("                        </button>\n");
+      out.write("                         <button class=\"btn btn-primary\"data-bs-target=\"#ModalEditarCor\" data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">\n");
+      out.write("                            Editar\n");
+      out.write("                        </button>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("                                \n");
+      out.write("        <!-- Modal Cadastro Cores -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalCadastrarCor\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog\">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Cadastrar Cor</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"CadastroCor\" method=\"POST\">\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                            </div>\n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalCores\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Cadastrar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim Modal Cores Cadastro -->\n");
+      out.write("        \n");
+      out.write("        <!-- Modal Editar Cores -->                        \n");
+      out.write("        <div class=\"modal fade\" id=\"ModalEditarCor\" \n");
+      out.write("             aria-hidden=\"true\" aria-labelledby=\"DSLabel2\" \n");
+      out.write("             tabindex=\"-1\">\n");
+      out.write("            <div class=\"modal-dialog \">\n");
+      out.write("                <div class=\"modal-content\">\n");
+      out.write("                    <div class=\"modal-header\">\n");
+      out.write("                        <h5 class=\"modal-title\" id=\"AlgoLabel\">Editar Cor</h5>\n");
+      out.write("                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                    <div class=\"modal-body p-5\">\n");
+      out.write("                        <form  action=\"EditarCor\" method=\"POST\">\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                  <label for=\"exampleInputText\">Modelo a cor para editar</label>\n");
+      out.write("                                  <select class=\"form-select\" aria-label=\"Default select example\" name=\"idCor\">\n");
+      out.write("                                    <option selected>Selecione a Cor </option>\n");
+      out.write("                                                        ");
+  
+                                                            String nomeCorEditar= "";
+                                                            String idCorEditar = "";
+                                                            
+                                                            Cor corEditar  = new Cor();
+                                                            ArrayList<Cor> arryCorEditar = daoCor.pesquisaTudoCor();
+
+                                                            for(int i3 = 0; i3 < arryCorEditar.size();i3++){
+                                                                corEditar = arryCorEditar.get(i3);
+                                                                nomeCorEditar = corEditar.getNome();
+                                                                idCorEditar = String.valueOf(corEditar.getCodigo());
+
+                                                        
+      out.write("\n");
+      out.write("                                         <option value=\"");
+      out.print(idCorEditar);
+      out.write('"');
+      out.write('>');
+      out.print(nomeCorEditar);
+      out.write("</option>\n");
+      out.write("\n");
+      out.write("                                          ");
+ } 
+      out.write("\n");
+      out.write("                                           </select>\n");
+      out.write("                            </div>\n");
+      out.write("                            <div class=\"form-group margin-input\">\n");
+      out.write("                                <label for=\"exampleInputText\">Nome</label>\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"nome\"  placeholder=\"Insira o nome\">\n");
+      out.write("                            </div>    \n");
+      out.write("                    </div>\n");
+      out.write("                    <div class=\"modal-footer\">\n");
+      out.write("                        <button class=\"btn btn-secondary\" data-bs-target=\"#ModalCores\"data-bs-toggle=\"modal\" data-bs-dismiss=\"modal\">Voltar</button>\n");
+      out.write("                         <button type=\"submit\" class=\"btn btn-primary\">Editar</button></form>\n");
+      out.write("                    </div>\n");
+      out.write("                </div>\n");
+      out.write("            </div>\n");
+      out.write("        </div>\n");
+      out.write("        <!-- Fim editar Cores -->\n");
+      out.write("         <!-- Fim Modal Cores -->\n");
+      out.write("         \n");
+      out.write("         \n");
+      out.write("         \n");
       out.write("         \n");
       out.write("        <!-- Sidebar -->\n");
       out.write("         <div class=\"bg-white\" id=\"sidebar-wrapper\">\n");
@@ -241,8 +769,111 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </nav>\n");
       out.write("\n");
       out.write("            <div class=\"container-fluid px-4\">\n");
-      out.write("               \n");
+      out.write("                <!--  Cards   -->\n");
+      out.write("                <div class=\"row g-3 \">\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                ");
+ 
+                                Veiculos totalVeiculo = new Veiculos();
+                                ManterVeiculo daoTotalVeiculo = new ManterVeiculo();
+
+                                totalVeiculo = daoTotalVeiculo.totalVeiculos();
+
+                                String vtotalVei = String.valueOf(totalVeiculo.getId());
+
+                            
       out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalVei);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Veiculos</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                            ");
+ 
+                            Marca totalMarca = new Marca();
+                            ManterMarca daoTotalMarca = new ManterMarca();
+                            
+                            totalMarca = daoTotalMarca.totalMarca();
+                            
+                            String vtotalMarca = String.valueOf(totalMarca.getCodigo());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalMarca);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Marcas</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i\n");
+      out.write("                                class=\"fas fa-duotone fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                        <div class=\"row justify-content-center\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar my-1\" data-bs-toggle=\"modal\" data-bs-target=\"#ModalMarca\">Exibir</button>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                  ");
+ 
+                            Modelo totalModelo = new Modelo();
+                            ManterModelo daoTotalModelo = new ManterModelo();
+                            
+                            totalModelo = daoTotalModelo.totalModelo();
+                            String vtotalModelo = String.valueOf(totalModelo.getId());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalModelo);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Modelos</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                        <div class=\"row justify-content-center\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar my-1\" data-bs-toggle=\"modal\" data-bs-target=\"#ModalModelo\">Exibir</button>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                 ");
+ 
+                            Cor totalCor = new Cor();
+                            ManterCor daoTotalCor = new ManterCor();
+                            
+                            totalCor = daoTotalCor.totalCor();
+                            String vtotalCor = String.valueOf(totalCor.getCodigo());
+
+                        
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalCor);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Cores</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-palette fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                        <div class=\"row justify-content-center\">\n");
+      out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar my-1\" data-bs-toggle=\"modal\" data-bs-target=\"#ModalCores\">Exibir</button>\n");
+      out.write("                        </div>        \n");
+      out.write("                    </div>\n");
+      out.write("                </div>        \n");
+      out.write("                <!-- Final Cards   -->\n");
+      out.write("                \n");
+      out.write("                <!-- Iniciar tabela -->\n");
       out.write("                <div class=\"row my-5 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
       out.write("                        <h3 class=\"fs-4 mb-3 text-dark\">Garagem</h3>\n");
@@ -278,7 +909,24 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
             ManterVeiculo dao = new ManterVeiculo();
             Veiculos ca = new Veiculos();
             
-            ArrayList<Veiculos> nt = dao.pesquisaTudoVeiculo();
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+            
+            int totalRegistorPorPagina = 4;
+
+            if(start==0 || start ==1 ){
+                 start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-4;
+            }
+            
+            ArrayList<Veiculos> nt = dao.pesquisaTudoVeiculoTabela(start,totalRegistorPorPagina);
             
             for(int i = 0; i < nt.size(); i++){
                 ca = nt.get(i);
@@ -315,10 +963,10 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                    <td>");
       out.print(vcor);
       out.write("</td>\n");
-      out.write("                                    <td class=\"\"><a href=\"DeletarFuncionario?id=");
+      out.write("                                    <td class=\"\"><a href=\"DeletarVeiculo?id=");
       out.print(vid);
       out.write("\" onclick=\"return confirm('Confirma exclusão do registro ");
-      out.print(vmodelo_id);
+      out.print(vmodelo);
       out.write("?')\"><i class=\"fas fa-solid fa-trash me-2 d-flex justify-content-center \" style=\"color: #ff0000;\"></i></a></td>\n");
       out.write("                                    <td><a href=\"#\"data-bs-toggle=\"modal\" data-bs-target=\"#modalEditar");
       out.print(vid);
@@ -332,11 +980,11 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                    <div class=\"modal-dialog \">\n");
       out.write("                                    <div class=\"modal-content\">\n");
       out.write("                                        <div class=\"modal-header\">\n");
-      out.write("                                        <h1 class=\"modal-title fs-5\" id=\"exampleModalLabel\">Editar Funcionario</h1>\n");
+      out.write("                                        <h1 class=\"modal-title fs-5\" id=\"exampleModalLabel\">Editar Veiculo</h1>\n");
       out.write("                                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n");
       out.write("                                        </div>\n");
       out.write("                                        <div class=\"modal-body\">\n");
-      out.write("                                            <form  action=\"EditarFuncionario\" method=\"POST\">\n");
+      out.write("                                            <form  action=\"EditarVeiculo\" method=\"POST\">\n");
       out.write("                                                 <div class=\"row\">\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Codigo</label>\n");
@@ -346,7 +994,7 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                    </div>\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Ano</label>\n");
-      out.write("                                                    <input type=\"text\" class=\"form-control\" name=\"nome\"  value=\"");
+      out.write("                                                    <input type=\"text\" class=\"form-control\" name=\"ano\"  value=\"");
       out.print(vano);
       out.write("\">\n");
       out.write("                                                    </div>\n");
@@ -360,7 +1008,7 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                    </div>\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Disponibilidade</label>\n");
-      out.write("                                                    <select class=\"form-select\" aria-label=\"Default select example\" name=\"status\">\n");
+      out.write("                                                    <select class=\"form-select\" aria-label=\"Default select example\" name=\"disponibilidade\">\n");
       out.write("                                                            <option value=\"");
       out.print(vdisponibilidade);
       out.write("\" selected>");
@@ -383,74 +1031,40 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                </div>\n");
       out.write("                                                <div class=\"row\">\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
-      out.write("                                                        <label for=\"exampleInputText\">Marca</label>\n");
-      out.write("                                                    <select class=\"form-select\" aria-label=\"Default select example\" name=\"marca\">\n");
-      out.write("                                                        <option selected value=\"");
-      out.print(vmarca);
-      out.write('"');
-      out.write('>');
-      out.print(vmarca);
-      out.write("</option>\n");
-      out.write("                                                    ");
-  
-                                                        String marcaNome2 = "";
-                                                        String marcaId2 = "";
-
-                                                        ManterMarca marcaDao2 = new ManterMarca();
-                                                        Marca marca2 = new Marca();
-                                                        ArrayList<Marca> arryMarca2 = marcaDao2.pesquisaTudoMarca();
-
-                                                        for(int i2 = 0; i2 < arryMarca2.size();i2++){
-                                                            marca2 = arryMarca2.get(i2);
-                                                            marcaNome2 = marca2.getNome();
-                                                            marcaId2 = String.valueOf(marca2.getCodigo());
-
-                                                    
-      out.write("\n");
-      out.write("                                                            <option value=\"");
-      out.print(marcaId2);
-      out.write('"');
-      out.write('>');
-      out.print(marcaNome2);
-      out.write("</option>\n");
-      out.write("\n");
-      out.write("                                                        ");
- } 
-      out.write("\n");
-      out.write("                                                    </select>\n");
-      out.write("                                                    </div>\n");
-      out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                        <label for=\"exampleInputText\">Modelo</label>\n");
       out.write("                                                        <select class=\"form-select\" aria-label=\"Default select example\" name=\"modelo\">\n");
       out.write("                                                            <option selected value=\"");
+      out.print(vmodelo_id);
+      out.write("\">Modelo: ");
       out.print(vmodelo);
-      out.write('"');
-      out.write('>');
-      out.print(vmodelo);
-      out.write("</option>\n");
-      out.write("                                                        ");
+      out.write(" | Marca: ");
+      out.print(vmarca);
+      out.write(" </option>\n");
+      out.write("                                                       ");
   
-                                                            String modeloNome2 = "";
-                                                            String modeloId2 = "";
+                                                                String modeloNomeEditar = "";
+                                                                String modeloIdEditar = "";
+                                                                String marcasNomeEditar="";
 
-                                                            ManterModelo modelodao2 = new ManterModelo();
-                                                            Modelo modelo2 = new Modelo();
-                                                            ArrayList<Modelo> arryModelo2 = modelodao2.pesquisaTudoModelo();
+                                                                Modelo modeloEditar2 = new Modelo();
+                                                                ArrayList<Modelo> arryModelo2 = modelodao.pesquisaTudoModelo();
 
-                                                            for(int a2 = 0; a2 < arryModelo.size();a2++){
-                                                                modelo2 = arryModelo2.get(a2);
-                                                                modeloNome2 = modelo2.getNome();
-                                                                modeloId2 = String.valueOf(modelo2.getId());
-                                                        
+                                                                for(int a = 0; a < arryModelo2.size();a++){
+                                                                    modeloEditar2 = arryModelo2.get(a);
+                                                                    modeloNomeEditar = modeloEditar2.getNome();
+                                                                    modeloIdEditar = String.valueOf(modeloEditar2.getId());
+                                                                    marcasNomeEditar = String.valueOf(modeloEditar2.getMarca());
+                                                            
       out.write("\n");
-      out.write("                                                                <option value=\"");
-      out.print(modeloId2);
-      out.write('"');
-      out.write('>');
-      out.print(modeloNome2);
+      out.write("                                                                    <option value=\"");
+      out.print(modeloIdEditar);
+      out.write("\">Modelo: ");
+      out.print(modeloNomeEditar);
+      out.write(" | Marca: ");
+      out.print(marcasNomeEditar);
       out.write("</option>\n");
       out.write("\n");
-      out.write("                                                            ");
+      out.write("                                                                ");
  } 
       out.write("\n");
       out.write("                                                              </select>\n");
@@ -461,7 +1075,7 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                       <label for=\"exampleInputText\">Cor</label>\n");
       out.write("                                                    <select class=\"form-select\" aria-label=\"Default select example\" name=\"cor\">\n");
       out.write("                                                        <option selected value=\"");
-      out.print(vcor);
+      out.print(vcores_id);
       out.write('"');
       out.write('>');
       out.print(vcor);
@@ -475,8 +1089,8 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
                                                         Cor cor2 = new Cor();
                                                         ArrayList<Cor> arryCor2 = corDao2.pesquisaTudoCor();
 
-                                                        for(int i3 = 0; i3 < arryCor.size();i3++){
-                                                            cor2 = arryCor.get(i3);
+                                                        for(int i3 = 0; i3 < arryCor2.size();i3++){
+                                                            cor2 = arryCor2.get(i3);
                                                             corNome2 = cor2.getNome();
                                                             corId2 = String.valueOf(cor2.getCodigo());
                                                     
@@ -512,8 +1126,36 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
       out.write("                    </div>\n");
-      out.write("                </div>\n");
+      out.write("                    <nav aria-label=\"Page navigation example position-absolute top-50 start-50 translate-middle\">\n");
+      out.write("                            <ul class=\"pagination\">\n");
+      out.write("                                ");
+   
+                                    
+                                Veiculos countObj = dao.totalVeiculos();
+                                double totalCount = Double.valueOf(countObj.getId());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                if(paginacao % 2 != 0){
+                                    paginacao += + 1;
+                                }
+                                for (int p = 1; p < paginacao;p++){
+                                
       out.write("\n");
+      out.write("                                <li class=\"page-item\"><a class=\"page-link\" href=\"garagem.jsp?page=");
+      out.print(contadorPag);
+      out.write('"');
+      out.write('>');
+      out.print(contadorPag);
+      out.write("</a></li>\n");
+      out.write("                                ");
+  
+                                 contadorPag +=1 ;   }
+                                
+      out.write("\n");
+      out.write("                            </ul>\n");
+      out.write("                    </nav>    \n");
+      out.write("                            \n");
+      out.write("                </div>\n");
       out.write("            </div>\n");
       out.write("        </div>\n");
       out.write("    </div>\n");

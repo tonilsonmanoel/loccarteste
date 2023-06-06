@@ -155,6 +155,62 @@ public final class cliente_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </nav>\n");
       out.write("\n");
       out.write("            <div class=\"container-fluid px-4\">\n");
+      out.write("                \n");
+      out.write("                <!--  Cards   -->\n");
+      out.write("                <div class=\"row g-3 \">\n");
+      out.write("                    <div class=\"col-md-6\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                ");
+ 
+                                Cliente totalCliente = new Cliente();
+                                ManterCliente daoTotalCliente = new ManterCliente();
+
+                                totalCliente = daoTotalCliente.totalCliente();
+
+                                String vTotalCliente = String.valueOf(totalCliente.getCodigo());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vTotalCliente);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Clientes</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-6\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                            ");
+ 
+                            
+                            Cliente totalClienteLocacao = daoTotalCliente.totalClienteLocacao();
+                            
+                            
+                            String vtotalClienteLocacao = String.valueOf(totalClienteLocacao.getCodigo());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalClienteLocacao);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Clientes Com Locação Ativa</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i\n");
+      out.write("                                class=\"fas fa-solid fa-file-contract fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                        \n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                </div>        \n");
+      out.write("                <!-- Final Cards   -->\n");
+      out.write("                \n");
+      out.write("                \n");
+      out.write("                \n");
+      out.write("                \n");
       out.write("                <div class=\"row my-5 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
       out.write("                        <h3 class=\"fs-4 mb-3 text-dark\">Clientes</h3>\n");
@@ -187,7 +243,26 @@ public final class cliente_jsp extends org.apache.jasper.runtime.HttpJspBase
             ManterCliente dao = new ManterCliente();
             Cliente ca = new Cliente();
           
-            ArrayList<Cliente> nt = dao.pesquisarTudoCliente();
+            
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+
+            int totalRegistorPorPagina = 3;
+
+            if(start==0 || start ==1 ){
+                start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-3;
+            }
+            
+            
+            ArrayList<Cliente> nt = dao.pesquisarTudoClienteTabela(start, totalRegistorPorPagina);
             
             for(int i = 0; i < nt.size(); i++){
                 ca = nt.get(i);
@@ -314,8 +389,39 @@ public final class cliente_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
       out.write("                    </div>\n");
-      out.write("                </div>\n");
+      out.write("                    <nav aria-label=\"Page navigation example position-absolute top-50 start-50 translate-middle\">\n");
+      out.write("                            <ul class=\"pagination\">\n");
+      out.write("                                ");
+   
+                                    
+                                Cliente countObj = dao.totalCliente();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                
+                                for (int p = 1; p <= paginacao;p++){
+                                
       out.write("\n");
+      out.write("                                <li class=\"page-item\"><a class=\"page-link\" href=\"cliente.jsp?page=");
+      out.print(contadorPag);
+      out.write('"');
+      out.write('>');
+      out.print(contadorPag);
+      out.write("</a></li>\n");
+      out.write("                                ");
+  
+                                 contadorPag +=1 ;   }
+                                
+      out.write("\n");
+      out.write("                            </ul>\n");
+      out.write("                    </nav>  \n");
+      out.write("                </div>\n");
       out.write("            </div>\n");
       out.write("        </div>\n");
       out.write("    </div>\n");

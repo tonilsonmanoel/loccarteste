@@ -40,9 +40,9 @@ public class ServletCadastroLocacao extends HttpServlet {
             String dataLocacao = request.getParameter("dataLocacao");
             String dataTermino = request.getParameter("dataTermino");
             int idVeiculo = Integer.valueOf(request.getParameter("veiculo"));
-            double diaria = Double.valueOf(request.getParameter("diaria"));
-            double valorLocacao = Double.valueOf(request.getParameter("valorLocacao"));
-            double valorPago = Double.valueOf(request.getParameter("valorPago"));
+            double diaria = Double.valueOf(request.getParameter("diaria").replace(',', '.'));
+            double valorLocacao = Double.valueOf(request.getParameter("valorLocacao").replace(',', '.'));
+            double valorPago = Double.valueOf(request.getParameter("valorPago").replace(',', '.'));
             String situacao = "ALUGADO";
             
             Locacoes loc = new Locacoes();

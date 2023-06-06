@@ -43,9 +43,9 @@ public class ServletEditarLocacao extends HttpServlet {
             String dataTermino = request.getParameter("dataTermino");
             int veiculo_id =Integer.valueOf(request.getParameter("veiculo"));
             int veiculoAnterio_id = Integer.valueOf(request.getParameter("veiculoAnteriorId"));
-            double diaria = Double.valueOf(request.getParameter("valorDiaria"));
-            double valorLocacao = Double.valueOf(request.getParameter("valorTotal"));
-            double valorPago = Double.valueOf(request.getParameter("valorPago"));
+            double diaria = Double.valueOf(request.getParameter("valorDiaria").replace(',', '.'));
+            double valorLocacao = Double.valueOf(request.getParameter("valorTotal").replace(',', '.'));
+            double valorPago = Double.valueOf(request.getParameter("valorPago").replace(',', '.'));
             String status = request.getParameter("status");
             
             

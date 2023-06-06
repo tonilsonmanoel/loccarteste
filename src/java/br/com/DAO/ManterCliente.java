@@ -40,7 +40,33 @@ public class ManterCliente extends DAO{
         ArrayList<Cliente> lista  = new ArrayList<Cliente>();
         try {
             abrirBanco();
-            String query= "select * FROM cliente";
+            String query= "select * FROM cliente ORDER BY id";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Cliente ntcben;
+            while(rs.next()){
+                ntcben = new Cliente();
+                ntcben.setCodigo(rs.getInt("id"));
+                ntcben.setNome(rs.getString("nome"));
+                ntcben.setCpf(rs.getString("cpf"));
+                ntcben.setEndereco(rs.getString("endereco"));
+                ntcben.setTelefone(rs.getString("telefone"));
+                ntcben.setEmail(rs.getString("email"));
+                ntcben.setCep(rs.getString("cep"));
+                lista.add(ntcben);
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Erro"+ e.getMessage());
+        }
+        return lista;
+    }
+    
+    public ArrayList pesquisarTudoClienteTabela(int start, int total){
+        ArrayList<Cliente> lista  = new ArrayList<Cliente>();
+        try {
+            abrirBanco();
+            String query= "select * FROM cliente ORDER BY id limit "+(start)+","+(total);
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             Cliente ntcben;
@@ -95,4 +121,39 @@ public class ManterCliente extends DAO{
             System.out.println("Erro"+ e.getMessage());
         }
     }
+    
+     public Cliente totalCliente(){
+        Cliente func = new Cliente();
+        try {
+            abrirBanco();
+            String query = "select count(*) as totalId from cliente;";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+               func.setCodigo(rs.getInt("totalId"));
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return func;
+    } 
+    public Cliente totalClienteLocacao(){
+        Cliente func = new Cliente();
+        try {
+            abrirBanco();
+            String query = "SELECT count(distinct clientes_id) as ClienteLocacao FROM locacoes where status_locacao ='ALUGADO';";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+               func.setCodigo(rs.getInt("ClienteLocacao"));
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return func;
+    } 
+    
+    
 }

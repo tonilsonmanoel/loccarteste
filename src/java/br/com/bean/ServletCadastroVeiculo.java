@@ -38,8 +38,7 @@ public class ServletCadastroVeiculo extends HttpServlet {
             
             String placa = request.getParameter("placa");
             int ano = Integer.valueOf(request.getParameter("ano"));
-            String Disponibilidade = "Disponivel";
-            int marca = Integer.valueOf(request.getParameter("marca"));
+            String Disponibilidade = "DISPONIVEL";
             int modelo = Integer.valueOf(request.getParameter("modelo"));
             int cor = Integer.valueOf(request.getParameter("cor"));
             
@@ -49,7 +48,6 @@ public class ServletCadastroVeiculo extends HttpServlet {
             vei.setPlaca(placa);
             vei.setAno(ano);
             vei.setDisponibilidade(Disponibilidade);
-            vei.setMarcas_id(marca);
             vei.setModelo_id(modelo);
             vei.setCores_id(cor);
             

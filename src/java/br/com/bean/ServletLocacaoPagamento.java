@@ -10,6 +10,9 @@ import br.com.controle.Contador;
 import br.com.controle.Locacoes;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,27 +34,23 @@ public class ServletLocacaoPagamento extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
            
             
-            int codigoLocacao = Integer.valueOf(request.getParameter("pagamento"));
-            double valorPago = Double.valueOf(request.getParameter("valorPago"));
+            int codigoLocacao = Integer.valueOf(request.getParameter("pagamento").replace(',', '.'));
+            double valorPago = Double.valueOf(request.getParameter("valorPago").replace(',', '.'));
             
-            Locacoes loc = new Locacoes();
             ManterLocacoes daoLoc = new ManterLocacoes();
             
-            Locacoes locValor = new Locacoes();
-            locValor.setCodigo(codigoLocacao);
-           
-            double valorFinal = valorPago + locValor.getValor_pago();
+            double valorAnterior = daoLoc.valorPagoLocacao(codigoLocacao);
             
-            out.println(locValor.getValor_pago());
-            out.println(valorPago);
-            out.println(valorFinal);
+            double valorFinal = valorPago + valorAnterior;
+            
+            Locacoes loc = new Locacoes();
             
             loc.setCodigo(codigoLocacao);
             loc.setValor_pago(valorFinal);
@@ -73,7 +72,11 @@ public class ServletLocacaoPagamento extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletLocacaoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -87,7 +90,11 @@ public class ServletLocacaoPagamento extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletLocacaoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

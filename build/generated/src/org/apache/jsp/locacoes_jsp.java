@@ -187,17 +187,17 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <div class=\"row\">\n");
       out.write("                            <div class=\"form-group margin-input col\">\n");
       out.write("                                <label for=\"exampleInputText\">Valor Diaria</label>\n");
-      out.write("                                <input type=\"number\" class=\"form-control\" name=\"diaria\" placeholder=\"Insira o valor\">\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"diaria\" placeholder=\"Insira o valor\">\n");
       out.write("                            </div>\n");
       out.write("                            <div class=\"form-group margin-input col\">\n");
       out.write("                                <label for=\"exampleInputText\">Valor Total </label>\n");
-      out.write("                                <input type=\"number\" class=\"form-control\" name=\"valorLocacao\" placeholder=\"Insira o valor\">\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"valorLocacao\" placeholder=\"Insira o valor\">\n");
       out.write("                            </div>\n");
       out.write("                        </div>\n");
       out.write("                        <div class=\"row\">\n");
       out.write("                            <div class=\"form-group margin-input col\">\n");
       out.write("                                <label for=\"exampleInputText\">Valor Pago</label>\n");
-      out.write("                                <input type=\"number\" class=\"form-control\" name=\"valorPago\" placeholder=\"Insira o valor\">\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"valorPago\" placeholder=\"Insira o valor\">\n");
       out.write("                            </div>\n");
       out.write("                        </div>\n");
       out.write("                       \n");
@@ -272,7 +272,7 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        </div>\n");
       out.write("                       <div class=\"form-group margin-input\">\n");
       out.write("                                <label for=\"exampleInputText\">Valor Pagamento</label>\n");
-      out.write("                                <input type=\"number\" class=\"form-control\" name=\"valorPago\" placeholder=\"Insira o valor\">\n");
+      out.write("                                <input type=\"text\" class=\"form-control\" name=\"valorPago\" placeholder=\"Insira o valor\">\n");
       out.write("                                \n");
       out.write("                        </div>\n");
       out.write("                                \n");
@@ -311,6 +311,8 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </div>\n");
       out.write("        <!-- /#sidebar-wrapper -->\n");
       out.write("\n");
+      out.write("        \n");
+      out.write("        \n");
       out.write("        <!-- Page Content -->\n");
       out.write("        <div id=\"page-content-wrapper\">\n");
       out.write("            <nav class=\"navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4\">\n");
@@ -318,16 +320,107 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <i class=\"fas fa-align-left primary-text fs-4 me-3\" id=\"menu-toggle\"></i>\n");
       out.write("                    <h2 class=\"fs-2 m-0\">Dashboard</h2>\n");
       out.write("                </div>\n");
-      out.write("\n");
-      out.write("                \n");
       out.write("            </nav>\n");
-      out.write("            \n");
-      out.write("           \n");
-      out.write("            \n");
       out.write("            <div class=\"container-fluid px-4\">\n");
       out.write("                \n");
+      out.write("                <!--  Cards   -->\n");
+      out.write("                <div class=\"row g-3 \">\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                ");
+ 
+                            Veiculos totalVeiculoDisp = new Veiculos();
+                            ManterVeiculo daoTotalVeiculo = new ManterVeiculo();
+                            
+                            totalVeiculoDisp = daoTotalVeiculo.totalVeiculosDisponivel();
+                            
+                            String vtotalVeiDisp = String.valueOf(totalVeiculoDisp.getId());
+
+                            
       out.write("\n");
-      out.write("                <div class=\"row my-5 \">\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalVeiDisp);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Veiculos Disponivel</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                            ");
+ 
+                            Cliente totalCliente = new Cliente();
+                            ManterCliente daoTotalCliente = new ManterCliente();
+                            
+                            totalCliente = daoTotalCliente.totalCliente();
+                            
+                            String vtotalCliente = String.valueOf(totalCliente.getCodigo());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vtotalCliente);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Clientes</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i\n");
+      out.write("                                class=\"fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                  ");
+ 
+                            Locacoes locacaoTotalAtiva = new Locacoes();
+                            ManterLocacoes daoTotalLocacoes = new ManterLocacoes();
+                            
+                            locacaoTotalAtiva = daoTotalLocacoes.totalLocacaoAtiva();
+                            String totalLocacaoAtiva = String.valueOf(locacaoTotalAtiva.getCodigo());
+
+                            
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(totalLocacaoAtiva);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Locações Ativa</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("\n");
+      out.write("                    <div class=\"col-md-3\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                 ");
+ 
+                            Locacoes locacaoTotal = new Locacoes();
+                            
+                            locacaoTotal = daoTotalLocacoes.totalLocacao();
+                            String totalLocacao = String.valueOf(locacaoTotal.getCodigo());
+
+                        
+      out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(totalLocacao);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Total Locações</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-file-contract fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                      </div>\n");
+      out.write("                </div>        \n");
+      out.write("                <!-- Final Cards   -->\n");
+      out.write("                \n");
+      out.write("                \n");
+      out.write("                \n");
+      out.write("\n");
+      out.write("                <div class=\"row my-4 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
       out.write("                        <h3 class=\"fs-4 mb-3 text-dark col \">Locações</h3>\n");
       out.write("                        \n");
@@ -374,14 +467,32 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
                             String vdataInicioFormat = "";
                             String vdataTerminoFormat = "";
 
-                            ManterLocacoes locacaoDAO =new ManterLocacoes();
+                            
+                             ManterLocacoes locacaoDAO =new ManterLocacoes();
                             Locacoes loc = new Locacoes();
 
-                            ArrayList<Locacoes> nt4 = locacaoDAO.pesquisaTudoLocacoes();
+                            int start;
 
+                            if(request.getParameter("page") == null){
+                                start = 0;
+                            } else{
+                                start = Integer.valueOf(request.getParameter("page"));
+                            }
 
-                            for(int i = 0; i < nt4.size(); i++){
-                                loc = nt4.get(i);
+                            int totalRegistorPorPagina = 3;
+
+                            if(start ==1 || start ==0){
+                                start = 0;
+                            }
+                            else{
+                                start = start * totalRegistorPorPagina-3;
+                            }
+
+                            ArrayList<Locacoes> ntTabela = locacaoDAO.pesquisaTudoLocacoesTabela(start, totalRegistorPorPagina);
+                            
+                           
+                            for(int a1 = 0; a1 < ntTabela.size(); a1++){
+                                loc = ntTabela.get(a1);
                                 vidLoc = String.valueOf(loc.getCodigo());
                                 vcliente = loc.getCliente();
                                 vdataInicio = loc.getData_inicio();
@@ -397,6 +508,7 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
                                 vCorLoc = loc.getCor();
                                 vVeiculoID = String.valueOf(loc.getPlaca_id());
                                 vcliente_id = String.valueOf(loc.getCliente_id());
+                                
                                                                     
       out.write("\n");
       out.write("                                <tr>\n");
@@ -435,6 +547,8 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("</td>\n");
       out.write("                                    <td class=\"\"><a href=\"DeletarLocacao?id=");
       out.print(vidLoc);
+      out.write("&idCar=");
+      out.print(vVeiculoID);
       out.write("\" onclick=\"return confirm('Confirma exclusão do registro ");
       out.print(vidLoc);
       out.write("?')\"><i class=\"fas fa-solid fa-trash me-2 d-flex justify-content-center \" style=\"color: #ff0000;\"></i></a></td>\n");
@@ -442,7 +556,6 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.print(vidLoc);
       out.write("\"><i class=\"fas fa-solid fa-pen me-2 d-flex justify-content-center\"></i></a></td>\n");
       out.write("                                </tr>\n");
-      out.write("                                <!-- Final Tabela -->\n");
       out.write("                                \n");
       out.write("                                <!-- Modal Editar -->\n");
       out.write("                                <div class=\"modal fade \" id=\"modalEditar");
@@ -540,13 +653,13 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                <div class=\"row\">\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Valor Diaria</label>\n");
-      out.write("                                                    <input type=\"number\" class=\"form-control\" name=\"valorDiaria\" value=\"");
+      out.write("                                                    <input type=\"text\" class=\"form-control\" name=\"valorDiaria\" value=\"");
       out.print(vvalorDiaria);
       out.write("\">\n");
       out.write("                                                    </div>\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Valor Total</label>\n");
-      out.write("                                                    <input type=\"number\" class=\"form-control\" name=\"valorTotal\" value=\"");
+      out.write("                                                    <input type=\"text\" class=\"form-control\" name=\"valorTotal\" value=\"");
       out.print(vvalorTotal);
       out.write("\">\n");
       out.write("                                                    </div>\n");
@@ -554,7 +667,7 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                <div class=\"row\">\n");
       out.write("                                                    <div class=\"form-group margin-input col\">\n");
       out.write("                                                    <label for=\"exampleInputText\">Valor Pago</label>\n");
-      out.write("                                                    <input type=\"number\" class=\"form-control\" name=\"valorPago\" value=\"");
+      out.write("                                                    <input type=\"text\" class=\"form-control\" name=\"valorPago\" value=\"");
       out.print(vvalorPago);
       out.write("\">\n");
       out.write("                                                    </div>\n");
@@ -586,8 +699,37 @@ public final class locacoes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
       out.write("                    </div>\n");
-      out.write("                </div>\n");
+      out.write("                    <nav aria-label=\"Page navigation example position-absolute top-50 start-50 translate-middle\">\n");
+      out.write("                            <ul class=\"pagination\">\n");
+      out.write("                                ");
+   
+                                    
+                                Locacoes countObj = locacaoDAO.totalLocacao();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                               if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                for (int p = 1; p <= paginacao;p++){
+                                
       out.write("\n");
+      out.write("                                <li class=\"page-item\"><a class=\"page-link\" href=\"locacoes.jsp?page=");
+      out.print(contadorPag);
+      out.write('"');
+      out.write('>');
+      out.print(contadorPag);
+      out.write("</a></li>\n");
+      out.write("                                ");
+  
+                                 contadorPag +=1 ;   }
+                                
+      out.write("\n");
+      out.write("                            </ul>\n");
+      out.write("                    </nav>   \n");
+      out.write("                </div>\n");
       out.write("            </div>\n");
       out.write("        </div>\n");
       out.write("    </div>\n");

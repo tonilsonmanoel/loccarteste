@@ -8,6 +8,7 @@ package br.com.DAO;
 import br.com.controle.Contador;
 import br.com.controle.Locacoes;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,6 @@ import java.util.ArrayList;
  * @author Tonilson
  */
 public class ManterLocacoes extends DAO{
-    
     public ArrayList<Locacoes> pesquisaTudoLocacoes(){
         ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
         try {
@@ -25,7 +25,48 @@ public class ManterLocacoes extends DAO{
                             "inner join veiculos as V ON L.veiculos_id = V.id\n" +
                             "inner join cliente as C ON L.clientes_id = C.id\n" +
                             "inner join cores as CR ON V.cores_id = CR.id\n" +
-                            "inner join modelos as M ON L.veiculos_id = M.id;";
+                            "inner join modelos as M ON V.modelos_id = M.id ORDER BY id";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Locacoes vei;
+            while(rs.next()){
+                vei = new Locacoes();
+                vei.setCodigo(rs.getInt("id"));
+                vei.setData_inicio(rs.getString("data_inicio"));
+                vei.setData_termino(rs.getString("data_termino"));
+                vei.setData_inicioFormat(rs.getString("dataInicioFormat"));
+                vei.setData_terminoFormat(rs.getString("dataTerminoFormat"));
+                vei.setValor_diaria(rs.getDouble("valor_diaria"));
+                vei.setValor_locacao(rs.getDouble("valor_locacao"));
+                vei.setValor_pago(rs.getDouble("valor_pago"));
+                vei.setStatusLocacoes(rs.getString("status_locacao"));
+                vei.setPlaca_id(rs.getInt("veiculos_id"));
+                vei.setCliente_id(rs.getInt("clientes_id"));
+                vei.setCliente(rs.getString("Cliente"));
+                vei.setCor(rs.getString("Cor"));
+                vei.setPlaca(rs.getString("Placa"));
+                vei.setModelo(rs.getString("Modelo"));
+                lista.add(vei);
+            }
+            fecharBanco();
+             
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return lista;
+    }
+    
+    
+    public ArrayList<Locacoes> pesquisaTudoLocacoesTabela(int start, int total){
+        ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
+        try {
+            abrirBanco();
+            String query = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+                            "FROM locacoes as L\n" +
+                            "inner join veiculos as V ON L.veiculos_id = V.id\n" +
+                            "inner join cliente as C ON L.clientes_id = C.id\n" +
+                            "inner join cores as CR ON V.cores_id = CR.id\n" +
+                            "inner join modelos as M ON V.modelos_id = M.id ORDER BY id limit "+(start)+","+(total);
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             Locacoes vei;
@@ -126,22 +167,51 @@ public class ManterLocacoes extends DAO{
         }
     }
     
-   public Contador totalLocacoes(){
-       Contador cont = new Contador();
-       try {
-           abrirBanco();
-           String query ="select count(id) as total_locacoes from locacoes ; ";
-           ps= con.prepareStatement(query);
-           ResultSet rs = ps.executeQuery();
-           cont.setContador(rs.getString("total_locacoes"));
-           fecharBanco();
-           return cont;
-       } catch (Exception e) {
-       }
-       
-       return null;
-   }
+    public double valorPagoLocacao(int codigo) throws SQLException, Exception{
+            double valor = 0;
+            abrirBanco();
+            String query = "SELECT valor_pago FROM locacoes where id=?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                valor = rs.getDouble("valor_pago");
+            }
+            fecharBanco();
+            return valor;
+    }
     
+    public Locacoes totalLocacao(){
+        Locacoes func = new Locacoes();
+        try {
+            abrirBanco();
+            String query = "select count(*) as totalId from locacoes;";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+               func.setCodigo(rs.getInt("totalId"));
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return func;
+    } 
     
-    
+    public Locacoes totalLocacaoAtiva(){
+        Locacoes func = new Locacoes();
+        try {
+            abrirBanco();
+            String query = "select count(*) as totalId from locacoes WHERE status_locacao=\"ALUGADO\"";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+               func.setCodigo(rs.getInt("totalId"));
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return func;
+    } 
 }

@@ -6,7 +6,9 @@
 package br.com.bean;
 
 import br.com.DAO.ManterLocacoes;
+import br.com.DAO.ManterVeiculo;
 import br.com.controle.Locacoes;
+import br.com.controle.Veiculos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -35,9 +37,16 @@ public class ServletDeletarLocacao extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.valueOf(request.getParameter("id"));
-            
+            int idCar = Integer.valueOf(request.getParameter("idCar"));
             Locacoes loc = new Locacoes();
             loc.setCodigo(id);
+            
+            ManterVeiculo daoVei = new ManterVeiculo();
+             Veiculos veiculo = new Veiculos();
+
+            veiculo.setId(idCar);
+            veiculo.setDisponibilidade("DISPONIVEL");
+            daoVei.atulizarStatusVeiculo(veiculo);
             
             ManterLocacoes dao = new ManterLocacoes();
             dao.deletarLocacao(loc);

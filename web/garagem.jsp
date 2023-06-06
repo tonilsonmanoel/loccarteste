@@ -54,35 +54,14 @@
                         </div>
                         <div class="row">
                             <div class="form-group margin-input col">
-                                <label for="exampleInputText">Marca</label>
-                            <select class="form-select" aria-label="Default select example" name="marca">
-                                    <option selected>Selecioner a marca</option>
-                            <%  
-                                String marcaNome = "";
-                                String marcaId = "";
-                                
-                                ManterMarca marcaDao = new ManterMarca();
-                                Marca marca = new Marca();
-                                ArrayList<Marca> arryMarca = marcaDao.pesquisaTudoMarca();
-                                
-                                for(int i = 0; i < arryMarca.size();i++){
-                                    marca = arryMarca.get(i);
-                                    marcaNome = marca.getNome();
-                                    marcaId = String.valueOf(marca.getCodigo());
-                                    
-                            %>
-                                    <option value="<%=marcaId%>"><%=marcaNome%></option>
-                                    
-                                <% } %>
-                            </select>
-                            </div>
-                            <div class="form-group margin-input col">
-                                <label for="exampleInputText">Modelo</label>
+                                <label for="exampleInputText">Modelo Veiculo</label>
                                 <select class="form-select" aria-label="Default select example" name="modelo">
-                                        <option selected>Selecioner o modelo</option>
+                                        <option selected>Selecioner o modelo do veiculo</option>
                                 <%  
                                     String modeloNome = "";
                                     String modeloId = "";
+                                    String marcasID = "";
+                                    String marcasNome="";
                                     
                                     ManterModelo modelodao = new ManterModelo();
                                     Modelo modelo = new Modelo();
@@ -92,8 +71,9 @@
                                         modelo = arryModelo.get(a);
                                         modeloNome = modelo.getNome();
                                         modeloId = String.valueOf(modelo.getId());
+                                        marcasNome = String.valueOf(modelo.getMarca());
                                 %>
-                                        <option value="<%=modeloId%>"><%=modeloNome%></option>
+                                        <option value="<%=modeloId%>">Modelo: <%=modeloNome%> | Marca: <%=marcasNome%></option>
 
                                     <% } %>
                                       </select>
@@ -133,6 +113,479 @@
         </div>
          <!-- Fim Modal Cadastro-->
          
+        
+       
+         <!-- Modal Marcas -->
+         
+         <div class="modal fade" id="ModalMarca">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="DSLabel">Marcas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                       <table class="table bg-white rounded shadow-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="50">#</th>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col" width="50">Apagar</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+            <%
+                        String vidMarca = "";
+                        String vnomeMarca = "";
+
+                        ManterMarca daoMarca =new ManterMarca();
+                        Marca marcaobj = new Marca();
+
+
+                        ArrayList<Marca> nt23 = daoMarca.pesquisaTudoMarca();
+
+                    for(int i3 = 0; i3 < nt23.size(); i3++){
+                        marcaobj = nt23.get(i3);
+                        vidMarca = String.valueOf(marcaobj.getCodigo());
+                        vnomeMarca = String.valueOf(marcaobj.getNome());
+                                                                            %>
+                                        <tr>
+                                            <th scope="row"><%=vidMarca%></th>
+                                            <td><%=vnomeMarca%></td>
+                                            <td class=""><a href="DeletarMarca?id=<%=vidMarca%>" onclick="return confirm('Confirma exclusão do registro <%=vnomeMarca%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
+                                        </tr>
+                                <%  }   %>
+
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button class="btn btn-primary"data-bs-target="#ModalCadastrarMarca" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Cadastrar
+                        </button>
+                         <button class="btn btn-primary"data-bs-target="#ModalEditarMarca" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <!-- Modal Cadastro Marcas -->                        
+        <div class="modal fade" id="ModalCadastrarMarca" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Cadastrar Marca</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="CadastroMarca" method="POST">
+                        <div class="form-group margin-input">
+                            <label for="exampleInputText">Nome</label>
+                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalMarca"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Cadastrar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Modal Marca Cadastro -->
+        
+        <!-- Modal Editar Marcas -->                        
+        <div class="modal fade" id="ModalEditarMarca" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Editar Marca</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="EditarMarca" method="POST">
+                        <div class="form-group margin-input">
+                             <label for="exampleInputText">Marca</label>
+                              <select class="form-select" aria-label="Default select example" name="idmarca">
+                                <option selected>Selecione a marca </option>
+                                                    <%  
+                                                        String marcaNome3 = "";
+                                                        String marcaId3 = "";
+
+                                                        ManterMarca marcaDao3 = new ManterMarca();
+                                                        Marca marca3= new Marca();
+                                                        ArrayList<Marca> arryMarca3 = marcaDao3.pesquisaTudoMarca();
+
+                                                        for(int i3 = 0; i3 < arryMarca3.size();i3++){
+                                                            marca3 = arryMarca3.get(i3);
+                                                            marcaNome3 = marca3.getNome();
+                                                            marcaId3 = String.valueOf(marca3.getCodigo());
+
+                                                    %>
+                                     <option value="<%=marcaId3%>"><%=marcaNome3%></option>
+
+                                      <% } %>
+                                       </select>
+                        </div>   
+                        <div class="form-group margin-input">
+                            <label for="exampleInputText">Nome</label>
+                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalMarca"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Editar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim editar Marcas -->
+         <!-- Fim Modal Marcas -->
+         
+         
+         <!-- Modal Modelo -->
+         
+         <div class="modal fade" id="ModalModelo">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="DSLabel">Modelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                       <table class="table bg-white rounded shadow-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="50">#</th>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col">Marca</th>
+                                            <th scope="col" width="50">Apagar</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+            <%
+                        String vidModelo = "";
+                        String vnomeModelo = "";
+                        String vnomeMarcaId = "";
+                        String vnomeMarcaM = "";
+                        
+                        ManterModelo daoModelo = new ManterModelo();
+                        Modelo modeloobj = new Modelo();
+
+                        ArrayList<Modelo> ntModelo = daoModelo.pesquisaTudoModelo();
+
+                    for(int imodelo = 0; imodelo < ntModelo.size(); imodelo++){
+                        modeloobj = ntModelo.get(imodelo);
+                        vidModelo = String.valueOf(modeloobj.getId());
+                        vnomeModelo = String.valueOf(modeloobj.getNome());
+                        vnomeMarcaId = String.valueOf(modeloobj.getMarcas_id());
+                        vnomeMarcaM = String.valueOf(modeloobj.getMarca());
+                        
+                                                                            %>
+                                        <tr>
+                                            <th scope="row"><%=vidModelo%></th>
+                                            <td><%=vnomeModelo%></td>
+                                            <td><%=vnomeMarcaM%></td>
+                                            <td class=""><a href="DeletarModelo?id=<%=vidModelo%>" onclick="return confirm('Confirma exclusão do registro <%=vnomeModelo%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
+                                        </tr>
+                                <%  }   %>
+
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button class="btn btn-primary"data-bs-target="#ModalCadastrarModelo" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Cadastrar
+                        </button>
+                         <button class="btn btn-primary"data-bs-target="#ModalEditarModelo" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <!-- Modal Cadastro Modelo -->                        
+        <div class="modal fade" id="ModalCadastrarModelo" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Cadastrar Modelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="CadastroModelo" method="POST">
+                            <div class="form-group margin-input">
+                                <label for="exampleInputText">Nome</label>
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            </div>
+                            <div class="form-group margin-input">
+                             <label for="exampleInputText">Marca</label>
+                              <select class="form-select" aria-label="Default select example" name="idmarca">
+                                <option selected>Selecione a marca </option>
+                                                    <%  
+                                                        String marcaNomeModelo = "";
+                                                        String marcaIdModelo = "";
+
+                                                        ManterMarca marcaDaoModelo = new ManterMarca();
+                                                        Marca marcaModeloCadastro = new Marca();
+                                                        
+                                                        ArrayList<Marca> arryMarcaModelo = marcaDaoModelo.pesquisaTudoMarca();
+
+                                                        for(int a = 0; a < arryMarcaModelo.size();a++){
+                                                            marcaModeloCadastro = arryMarcaModelo.get(a);
+                                                            marcaNomeModelo = marcaModeloCadastro.getNome();
+                                                            marcaIdModelo = String.valueOf(marcaModeloCadastro.getCodigo());
+
+                                                    %>
+                                     <option value="<%=marcaIdModelo%>"><%=marcaNomeModelo%></option>
+
+                                      <% } %>
+                                       </select>
+                                </div>   
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalModelo"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Cadastrar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Modal Modelo Cadastro -->
+        
+        <!-- Modal Editar Modelo -->                        
+        <div class="modal fade" id="ModalEditarModelo" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Editar Modelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="EditarModelo" method="POST">
+                            <div class="form-group margin-input">
+                                  <label for="exampleInputText">Modelo o modelo para editar</label>
+                                  <select class="form-select" aria-label="Default select example" name="idModelo">
+                                    <option selected>Selecione o modelo </option>
+                                                        <%  
+                                                            String nomeModeloEditar= "";
+                                                            String idModeloEditar = "";
+                                                            
+                                                            ManterModelo modeloDaoEditar = new ManterModelo();
+                                                            Modelo modeloEditar  = new Modelo();
+                                                            ArrayList<Modelo> arryModeloEditar = modeloDaoEditar.pesquisaTudoModelo();
+
+                                                            for(int i3 = 0; i3 < arryModeloEditar.size();i3++){
+                                                                modeloEditar = arryModeloEditar.get(i3);
+                                                                nomeModeloEditar = modeloEditar.getNome();
+                                                                idModeloEditar = String.valueOf(modeloEditar.getId());
+
+                                                        %>
+                                         <option value="<%=idModeloEditar%>"><%=nomeModeloEditar%></option>
+
+                                          <% } %>
+                                           </select>
+                            </div>
+                                 
+                            <div class="form-group margin-input">
+                                <label for="exampleInputText">Nome</label>
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            </div>               
+                                           
+                            <div class="form-group margin-input">
+                                  <label for="exampleInputText">Marca</label>
+                                  <select class="form-select" aria-label="Default select example" name="idmarca">
+                                    <option selected>Selecione a marca </option>
+                                                        <%  
+                                                            String marcaNomeModelo2 = "";
+                                                            String marcaIdModelo2 = "";
+
+                                                            Marca marcaModelo2= new Marca();
+                                                            ArrayList<Marca> arryMarcaModelo3 = marcaDaoModelo.pesquisaTudoMarca();
+
+                                                            for(int i3 = 0; i3 < arryMarcaModelo3.size();i3++){
+                                                                marcaModelo2 = arryMarcaModelo3.get(i3);
+                                                                marcaNomeModelo2 = marcaModelo2.getNome();
+                                                                marcaIdModelo2 = String.valueOf(marcaModelo2.getCodigo());
+
+                                                        %>
+                                         <option value="<%=marcaIdModelo2%>"><%=marcaNomeModelo2%></option>
+
+                                          <% } %>
+                                           </select>
+                            </div>   
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalModelo"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Editar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim editar Modelo -->
+         <!-- Fim Modal Modelo -->
+         
+         
+         <!-- Modal Cores -->
+         
+         <div class="modal fade" id="ModalCores">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="DSLabel">Cor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                       <table class="table bg-white rounded shadow-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="50">#</th>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col" width="50">Apagar</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+            <%
+                        String vidCor = "";
+                        String vnomeCor = "";
+                        
+                        ManterCor daoCor = new ManterCor();
+                        Cor corobj = new Cor();
+
+                        ArrayList<Cor> ntCor = daoCor.pesquisaTudoCor();
+
+                    for(int iCor = 0; iCor < ntCor.size(); iCor++){
+                        corobj = ntCor.get(iCor);
+                        vidCor = String.valueOf(corobj.getCodigo());
+                        vnomeCor = String.valueOf(corobj.getNome());
+                        
+                        
+                                                                            %>
+                                        <tr>
+                                            <th scope="row"><%=vidCor%></th>
+                                            <td><%=vnomeCor%></td>
+                                            <td class=""><a href="DeletaCor?id=<%=vidCor%>" onclick="return confirm('Confirma exclusão do registro <%=vnomeCor%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
+                                        </tr>
+                                <%  }   %>
+
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button class="btn btn-primary"data-bs-target="#ModalCadastrarCor" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Cadastrar
+                        </button>
+                         <button class="btn btn-primary"data-bs-target="#ModalEditarCor" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <!-- Modal Cadastro Cores -->                        
+        <div class="modal fade" id="ModalCadastrarCor" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Cadastrar Cor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="CadastroCor" method="POST">
+                            <div class="form-group margin-input">
+                                <label for="exampleInputText">Nome</label>
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalCores"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Cadastrar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Modal Cores Cadastro -->
+        
+        <!-- Modal Editar Cores -->                        
+        <div class="modal fade" id="ModalEditarCor" 
+             aria-hidden="true" aria-labelledby="DSLabel2" 
+             tabindex="-1">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AlgoLabel">Editar Cor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5">
+                        <form  action="EditarCor" method="POST">
+                            <div class="form-group margin-input">
+                                  <label for="exampleInputText">Modelo a cor para editar</label>
+                                  <select class="form-select" aria-label="Default select example" name="idCor">
+                                    <option selected>Selecione a Cor </option>
+                                                        <%  
+                                                            String nomeCorEditar= "";
+                                                            String idCorEditar = "";
+                                                            
+                                                            Cor corEditar  = new Cor();
+                                                            ArrayList<Cor> arryCorEditar = daoCor.pesquisaTudoCor();
+
+                                                            for(int i3 = 0; i3 < arryCorEditar.size();i3++){
+                                                                corEditar = arryCorEditar.get(i3);
+                                                                nomeCorEditar = corEditar.getNome();
+                                                                idCorEditar = String.valueOf(corEditar.getCodigo());
+
+                                                        %>
+                                         <option value="<%=idCorEditar%>"><%=nomeCorEditar%></option>
+
+                                          <% } %>
+                                           </select>
+                            </div>
+                            <div class="form-group margin-input">
+                                <label for="exampleInputText">Nome</label>
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            </div>    
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#ModalCores"data-bs-toggle="modal" data-bs-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-primary">Editar</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim editar Cores -->
+         <!-- Fim Modal Cores -->
+         
+         
+         
          
         <!-- Sidebar -->
          <div class="bg-white" id="sidebar-wrapper">
@@ -166,8 +619,95 @@
             </nav>
 
             <div class="container-fluid px-4">
-               
+                <!--  Cards   -->
+                <div class="row g-3 ">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <% 
+                                Veiculos totalVeiculo = new Veiculos();
+                                ManterVeiculo daoTotalVeiculo = new ManterVeiculo();
 
+                                totalVeiculo = daoTotalVeiculo.totalVeiculos();
+
+                                String vtotalVei = String.valueOf(totalVeiculo.getId());
+
+                            %>
+                                <h3 class="fs-2"><%=vtotalVei%></h3>
+                                <p class="fs-5">Veiculos</p>
+                            </div>
+                            <i class="fas fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                            <% 
+                            Marca totalMarca = new Marca();
+                            ManterMarca daoTotalMarca = new ManterMarca();
+                            
+                            totalMarca = daoTotalMarca.totalMarca();
+                            
+                            String vtotalMarca = String.valueOf(totalMarca.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=vtotalMarca%></h3>
+                                <p class="fs-5">Marcas</p>
+                            </div>
+                            <i
+                                class="fas fa-duotone fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                        <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary  botao_cadastrar my-1" data-bs-toggle="modal" data-bs-target="#ModalMarca">Exibir</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                  <% 
+                            Modelo totalModelo = new Modelo();
+                            ManterModelo daoTotalModelo = new ManterModelo();
+                            
+                            totalModelo = daoTotalModelo.totalModelo();
+                            String vtotalModelo = String.valueOf(totalModelo.getId());
+
+                            %>
+                                <h3 class="fs-2"><%=vtotalModelo%></h3>
+                                <p class="fs-5">Modelos</p>
+                            </div>
+                            <i class="fas fa-solid fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                        <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary  botao_cadastrar my-1" data-bs-toggle="modal" data-bs-target="#ModalModelo">Exibir</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                 <% 
+                            Cor totalCor = new Cor();
+                            ManterCor daoTotalCor = new ManterCor();
+                            
+                            totalCor = daoTotalCor.totalCor();
+                            String vtotalCor = String.valueOf(totalCor.getCodigo());
+
+                        %>
+                                <h3 class="fs-2"><%=vtotalCor%></h3>
+                                <p class="fs-5">Cores</p>
+                            </div>
+                            <i class="fas fa-solid fa-palette fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                        <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary  botao_cadastrar my-1" data-bs-toggle="modal" data-bs-target="#ModalCores">Exibir</button>
+                        </div>        
+                    </div>
+                </div>        
+                <!-- Final Cards   -->
+                
+                <!-- Iniciar tabela -->
                 <div class="row my-5 ">
                     <div class="row position-relative">
                         <h3 class="fs-4 mb-3 text-dark">Garagem</h3>
@@ -203,7 +743,24 @@
             ManterVeiculo dao = new ManterVeiculo();
             Veiculos ca = new Veiculos();
             
-            ArrayList<Veiculos> nt = dao.pesquisaTudoVeiculo();
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+            
+            int totalRegistorPorPagina = 4;
+
+            if(start==0 || start ==1 ){
+                 start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-4;
+            }
+            
+            ArrayList<Veiculos> nt = dao.pesquisaTudoVeiculoTabela(start,totalRegistorPorPagina);
             
             for(int i = 0; i < nt.size(); i++){
                 ca = nt.get(i);
@@ -225,7 +782,7 @@
                                     <td><%=vmodelo%></td>
                                     <td><%=vmarca%></td>
                                     <td><%=vcor%></td>
-                                    <td class=""><a href="DeletarFuncionario?id=<%=vid%>" onclick="return confirm('Confirma exclusão do registro <%=vmodelo_id%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
+                                    <td class=""><a href="DeletarVeiculo?id=<%=vid%>" onclick="return confirm('Confirma exclusão do registro <%=vmodelo%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
                                     <td><a href="#"data-bs-toggle="modal" data-bs-target="#modalEditar<%=vid%>"><i class="fas fa-solid fa-pen me-2 d-flex justify-content-center"></i></a></td>
                                 </tr>
                                 
@@ -234,11 +791,11 @@
                                     <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Funcionario</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Veiculo</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form  action="EditarFuncionario" method="POST">
+                                            <form  action="EditarVeiculo" method="POST">
                                                  <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Codigo</label>
@@ -246,7 +803,7 @@
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Ano</label>
-                                                    <input type="text" class="form-control" name="nome"  value="<%=vano%>">
+                                                    <input type="text" class="form-control" name="ano"  value="<%=vano%>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -256,7 +813,7 @@
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Disponibilidade</label>
-                                                    <select class="form-select" aria-label="Default select example" name="status">
+                                                    <select class="form-select" aria-label="Default select example" name="disponibilidade">
                                                             <option value="<%=vdisponibilidade%>" selected><%=vdisponibilidade%></option>
                                                             <%  if(vdisponibilidade.equals("ALUGADO")){  %>
                                                             <option value="DISPONIVEL">DISPONIVEL</option>
@@ -269,48 +826,26 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
-                                                        <label for="exampleInputText">Marca</label>
-                                                    <select class="form-select" aria-label="Default select example" name="marca">
-                                                        <option selected value="<%=vmarca%>"><%=vmarca%></option>
-                                                    <%  
-                                                        String marcaNome2 = "";
-                                                        String marcaId2 = "";
-
-                                                        ManterMarca marcaDao2 = new ManterMarca();
-                                                        Marca marca2 = new Marca();
-                                                        ArrayList<Marca> arryMarca2 = marcaDao2.pesquisaTudoMarca();
-
-                                                        for(int i2 = 0; i2 < arryMarca2.size();i2++){
-                                                            marca2 = arryMarca2.get(i2);
-                                                            marcaNome2 = marca2.getNome();
-                                                            marcaId2 = String.valueOf(marca2.getCodigo());
-
-                                                    %>
-                                                            <option value="<%=marcaId2%>"><%=marcaNome2%></option>
-
-                                                        <% } %>
-                                                    </select>
-                                                    </div>
-                                                    <div class="form-group margin-input col">
                                                         <label for="exampleInputText">Modelo</label>
                                                         <select class="form-select" aria-label="Default select example" name="modelo">
-                                                            <option selected value="<%=vmodelo%>"><%=vmodelo%></option>
-                                                        <%  
-                                                            String modeloNome2 = "";
-                                                            String modeloId2 = "";
+                                                            <option selected value="<%=vmodelo_id%>">Modelo: <%=vmodelo%> | Marca: <%=vmarca%> </option>
+                                                       <%  
+                                                                String modeloNomeEditar = "";
+                                                                String modeloIdEditar = "";
+                                                                String marcasNomeEditar="";
 
-                                                            ManterModelo modelodao2 = new ManterModelo();
-                                                            Modelo modelo2 = new Modelo();
-                                                            ArrayList<Modelo> arryModelo2 = modelodao2.pesquisaTudoModelo();
+                                                                Modelo modeloEditar2 = new Modelo();
+                                                                ArrayList<Modelo> arryModelo2 = modelodao.pesquisaTudoModelo();
 
-                                                            for(int a2 = 0; a2 < arryModelo.size();a2++){
-                                                                modelo2 = arryModelo2.get(a2);
-                                                                modeloNome2 = modelo2.getNome();
-                                                                modeloId2 = String.valueOf(modelo2.getId());
-                                                        %>
-                                                                <option value="<%=modeloId2%>"><%=modeloNome2%></option>
+                                                                for(int a = 0; a < arryModelo2.size();a++){
+                                                                    modeloEditar2 = arryModelo2.get(a);
+                                                                    modeloNomeEditar = modeloEditar2.getNome();
+                                                                    modeloIdEditar = String.valueOf(modeloEditar2.getId());
+                                                                    marcasNomeEditar = String.valueOf(modeloEditar2.getMarca());
+                                                            %>
+                                                                    <option value="<%=modeloIdEditar%>">Modelo: <%=modeloNomeEditar%> | Marca: <%=marcasNomeEditar%></option>
 
-                                                            <% } %>
+                                                                <% } %>
                                                               </select>
                                                     </div>
                                                 </div>
@@ -318,7 +853,7 @@
                                                    <div class="form-group margin-input col">
                                                        <label for="exampleInputText">Cor</label>
                                                     <select class="form-select" aria-label="Default select example" name="cor">
-                                                        <option selected value="<%=vcor%>"><%=vcor%></option>
+                                                        <option selected value="<%=vcores_id%>"><%=vcor%></option>
                                                     <%  
                                                         String corNome2 = "";
                                                         String corId2 ="";
@@ -327,8 +862,8 @@
                                                         Cor cor2 = new Cor();
                                                         ArrayList<Cor> arryCor2 = corDao2.pesquisaTudoCor();
 
-                                                        for(int i3 = 0; i3 < arryCor.size();i3++){
-                                                            cor2 = arryCor.get(i3);
+                                                        for(int i3 = 0; i3 < arryCor2.size();i3++){
+                                                            cor2 = arryCor2.get(i3);
                                                             corNome2 = cor2.getNome();
                                                             corId2 = String.valueOf(cor2.getCodigo());
                                                     %>
@@ -354,8 +889,29 @@
                             </tbody>
                         </table>
                     </div>
+                    <nav aria-label="Page navigation example position-absolute top-50 start-50 translate-middle">
+                            <ul class="pagination">
+                                <%   
+                                    
+                                Veiculos countObj = dao.totalVeiculos();
+                                double totalCount = Double.valueOf(countObj.getId());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                for (int p = 1; p <= paginacao;p++){
+                                %>
+                                <li class="page-item"><a class="page-link" href="garagem.jsp?page=<%=contadorPag%>"><%=contadorPag%></a></li>
+                                <%  
+                                 contadorPag +=1 ;   }
+                                %>
+                            </ul>
+                    </nav>    
+                            
                 </div>
-
             </div>
         </div>
     </div>

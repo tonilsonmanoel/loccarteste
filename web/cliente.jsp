@@ -113,6 +113,54 @@
             </nav>
 
             <div class="container-fluid px-4">
+                
+                <!--  Cards   -->
+                <div class="row g-3 ">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <% 
+                                Cliente totalCliente = new Cliente();
+                                ManterCliente daoTotalCliente = new ManterCliente();
+
+                                totalCliente = daoTotalCliente.totalCliente();
+
+                                String vTotalCliente = String.valueOf(totalCliente.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=vTotalCliente%></h3>
+                                <p class="fs-5">Clientes</p>
+                            </div>
+                            <i class="fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                            <% 
+                            
+                            Cliente totalClienteLocacao = daoTotalCliente.totalClienteLocacao();
+                            
+                            
+                            String vtotalClienteLocacao = String.valueOf(totalClienteLocacao.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=vtotalClienteLocacao%></h3>
+                                <p class="fs-5">Clientes Com Locação Ativa</p>
+                            </div>
+                            <i
+                                class="fas fa-solid fa-file-contract fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                        
+                    </div>
+                    
+                </div>        
+                <!-- Final Cards   -->
+                
+                
+                
+                
                 <div class="row my-5 ">
                     <div class="row position-relative">
                         <h3 class="fs-4 mb-3 text-dark">Clientes</h3>
@@ -145,7 +193,26 @@
             ManterCliente dao = new ManterCliente();
             Cliente ca = new Cliente();
           
-            ArrayList<Cliente> nt = dao.pesquisarTudoCliente();
+            
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+
+            int totalRegistorPorPagina = 3;
+
+            if(start==0 || start ==1 ){
+                start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-3;
+            }
+            
+            
+            ArrayList<Cliente> nt = dao.pesquisarTudoClienteTabela(start, totalRegistorPorPagina);
             
             for(int i = 0; i < nt.size(); i++){
                 ca = nt.get(i);
@@ -231,8 +298,30 @@
                             </tbody>
                         </table>
                     </div>
+                    <nav aria-label="Page navigation example position-absolute top-50 start-50 translate-middle">
+                            <ul class="pagination">
+                                <%   
+                                    
+                                Cliente countObj = dao.totalCliente();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                
+                                for (int p = 1; p <= paginacao;p++){
+                                %>
+                                <li class="page-item"><a class="page-link" href="cliente.jsp?page=<%=contadorPag%>"><%=contadorPag%></a></li>
+                                <%  
+                                 contadorPag +=1 ;   }
+                                %>
+                            </ul>
+                    </nav>  
                 </div>
-
             </div>
         </div>
     </div>

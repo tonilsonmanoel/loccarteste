@@ -163,7 +163,36 @@ public final class funcionarios_jsp extends org.apache.jasper.runtime.HttpJspBas
       out.write("\n");
       out.write("            <div class=\"container-fluid px-4\">\n");
       out.write("                \n");
+      out.write("                 <!--  Cards   -->\n");
+      out.write("                <div class=\"row g-3 \">\n");
+      out.write("                    <div class=\"col-md-6\">\n");
+      out.write("                        <div class=\"p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded\">\n");
+      out.write("                            <div>\n");
+      out.write("                                ");
+ 
+                                Funcionario totalFuncionario = new Funcionario();
+                                ManterFuncionario daoTotalFuncionario = new ManterFuncionario();
+
+                                totalFuncionario = daoTotalFuncionario.totalFucnioario();
+
+                                String vTotalFuncionario = String.valueOf(totalFuncionario.getCodigo());
+
+                            
       out.write("\n");
+      out.write("                                <h3 class=\"fs-2\">");
+      out.print(vTotalFuncionario);
+      out.write("</h3>\n");
+      out.write("                                <p class=\"fs-5\">Funcionarios</p>\n");
+      out.write("                            </div>\n");
+      out.write("                            <i class=\"fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3\"></i>\n");
+      out.write("                        </div>\n");
+      out.write("                    </div>\n");
+      out.write("                    \n");
+      out.write("                </div>        \n");
+      out.write("                <!-- Final Cards   -->\n");
+      out.write("                \n");
+      out.write("                \n");
+      out.write("                \n");
       out.write("                <div class=\"row my-5 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
       out.write("                        <h3 class=\"fs-4 mb-3 text-dark\">Funcionarios</h3>\n");
@@ -200,7 +229,26 @@ public final class funcionarios_jsp extends org.apache.jasper.runtime.HttpJspBas
             ManterFuncionario dao =new ManterFuncionario();
             Funcionario ca = new Funcionario();
             
-            ArrayList<Funcionario> nt = dao.pesquisaTudoFuncionario();
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+
+            int totalRegistorPorPagina = 3;
+
+            if(start==0 || start ==1 ){
+                start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-3;
+            }
+            
+            
+            
+            ArrayList<Funcionario> nt = dao.pesquisaTudoFuncionarioTabela(start, totalRegistorPorPagina);
         
             
             for(int i = 0; i < nt.size(); i++){
@@ -335,6 +383,40 @@ public final class funcionarios_jsp extends org.apache.jasper.runtime.HttpJspBas
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
       out.write("                    </div>\n");
+      out.write("                    <nav aria-label=\"Page navigation example position-absolute top-50 start-50 translate-middle\">\n");
+      out.write("                            <ul class=\"pagination\">\n");
+      out.write("                                ");
+   
+                                    
+                                Funcionario countObj =dao.totalFucnioario();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                
+                                
+                                for (int p = 1; p <= paginacao;p++){
+                                
+      out.write("\n");
+      out.write("                                <li class=\"page-item\"><a class=\"page-link\" href=\"funcionarios.jsp?page=");
+      out.print(contadorPag);
+      out.write('"');
+      out.write('>');
+      out.print(contadorPag);
+      out.write("</a></li>\n");
+      out.write("                                ");
+  
+                                 contadorPag +=1 ;   }
+                                
+      out.write("\n");
+      out.write("                            </ul>\n");
+      out.write("                    </nav>    \n");
+      out.write("                       \n");
       out.write("                </div>\n");
       out.write("\n");
       out.write("            </div>\n");

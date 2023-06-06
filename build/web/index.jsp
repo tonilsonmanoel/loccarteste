@@ -4,6 +4,7 @@
     Author     : Tonilson
 --%>
 
+
 <%@page import="br.com.controle.Funcionario"%>
 <%@page import="br.com.controle.Contador"%>
 <%@page import="java.util.Date"%>
@@ -35,9 +36,9 @@
    
     <div class="d-flex" id="wrapper">
 
-        <!-- Modal Cadastro -->
+        <!-- Modal Cadastro Locação -->
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog ">
+            <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar locação</h1>
@@ -115,17 +116,17 @@
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Diaria</label>
-                                <input type="number" class="form-control" name="diaria" placeholder="Insira o valor">
+                                <input type="text" class="form-control" name="diaria" placeholder="Insira o valor">
                             </div>
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Total </label>
-                                <input type="number" class="form-control" name="valorLocacao" placeholder="Insira o valor">
+                                <input type="text" class="form-control" name="valorLocacao" placeholder="Insira o valor">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Pago</label>
-                                <input type="number" class="form-control" name="valorPago" placeholder="Insira o valor">
+                                <input type="text" class="form-control" name="valorPago" placeholder="Insira o valor">
                             </div>
                         </div>
                        
@@ -137,7 +138,8 @@
             </div>
             </div>
         </div>
-         <!-- Fim Modal Cadastro-->
+         <!-- Fim Modal Cadastro Locação-->
+         
          
         <!-- Modal Pagamento -->
         <div class="modal fade " id="ModalPagamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -150,7 +152,7 @@
                 <div class="modal-body">
                     <form  action="LocacaoPagamento" method="POST">
                         <div class="form-group margin-input">
-                            <label for="exampleInputText">Nome </label>
+                            <label for="exampleInputText">Cliente </label>
                             <select class="form-select" aria-label="Default select example" name="pagamento">
                                 <option selected>Selecione Cliente</option>
                                  <%
@@ -181,12 +183,12 @@
                          %>
                                 <option value="<%=vidLocPag%>">Nome: <%=vclientePag%> | CPF: <%=vcpfCliente%> | Data Locação: <%=vdataInicioFormatPag%> | Valor Locação: <%=vvalorTotalPag%></option>
                                 
-                            <% }} %>
+                                <% }} %>
                              </select>
                         </div>
                        <div class="form-group margin-input">
                                 <label for="exampleInputText">Valor Pagamento</label>
-                                <input type="number" class="form-control" name="valorPago" placeholder="Insira o valor">
+                                <input type="text" class="form-control" name="valorPago" placeholder="Insira o valor">
                                 
                         </div>
                                 
@@ -200,8 +202,6 @@
         </div>
          <!-- Fim Modal Pagamento-->  
          
-
-
 
         <!-- Sidebar -->
         <div class="bg-white" id="sidebar-wrapper">
@@ -222,8 +222,9 @@
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
         </div>
-        <!-- /#sidebar-wrapper -->
+        <!-- sidebar-wrapper -->
 
+        
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
@@ -239,12 +240,87 @@
                 </button>
             </nav>
             
-            
-            
             <div class="container-fluid px-4">
-                
+            <!--  Cards   -->
+                <div class="row g-3 ">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <% 
+                            Veiculos totalVeiculoDisp = new Veiculos();
+                            ManterVeiculo daoTotalVeiculo = new ManterVeiculo();
+                            
+                            totalVeiculoDisp = daoTotalVeiculo.totalVeiculosDisponivel();
+                            
+                            String vtotalVeiDisp = String.valueOf(totalVeiculoDisp.getId());
 
-                <div class="row my-5 ">
+                            %>
+                                <h3 class="fs-2"><%=vtotalVeiDisp%></h3>
+                                <p class="fs-5">Veiculos Disponivel</p>
+                            </div>
+                            <i class="fas fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                            <% 
+                            Cliente totalCliente = new Cliente();
+                            ManterCliente daoTotalCliente = new ManterCliente();
+                            
+                            totalCliente = daoTotalCliente.totalCliente();
+                            
+                            String vtotalCliente = String.valueOf(totalCliente.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=vtotalCliente%></h3>
+                                <p class="fs-5">Clientes</p>
+                            </div>
+                            <i
+                                class="fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                  <% 
+                            Locacoes locacaoTotalAtiva = new Locacoes();
+                            ManterLocacoes daoTotalLocacoes = new ManterLocacoes();
+                            
+                            locacaoTotalAtiva = daoTotalLocacoes.totalLocacaoAtiva();
+                            String totalLocacaoAtiva = String.valueOf(locacaoTotalAtiva.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=totalLocacaoAtiva%></h3>
+                                <p class="fs-5">Locações Ativa</p>
+                            </div>
+                            <i class="fas fa-solid fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                 <% 
+                            Locacoes locacaoTotal = new Locacoes();
+                            
+                            locacaoTotal = daoTotalLocacoes.totalLocacao();
+                            String totalLocacao = String.valueOf(locacaoTotal.getCodigo());
+
+                        %>
+                                <h3 class="fs-2"><%=totalLocacao%></h3>
+                                <p class="fs-5">Locações</p>
+                            </div>
+                            <i class="fas fa-solid fa-file-contract fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                      </div>
+                </div>        
+                <!-- Final Cards   -->
+                
+                
+                <div class="row my-3 ">
                     <div class="row position-relative">
                         <h3 class="fs-4 mb-3 text-dark col ">Locações Ativas</h3>
                         
@@ -290,15 +366,33 @@
                             String vcliente_id = "";
                             String vdataInicioFormat = "";
                             String vdataTerminoFormat = "";
-
+                            
                             ManterLocacoes locacaoDAO =new ManterLocacoes();
                             Locacoes loc = new Locacoes();
 
-                            ArrayList<Locacoes> nt4 = locacaoDAO.pesquisaTudoLocacoes();
+                            int start;
 
+                            if(request.getParameter("page") == null){
+                                start = 0;
+                            } else{
+                                start = Integer.valueOf(request.getParameter("page"));
+                            }
 
-                            for(int i = 0; i < nt4.size(); i++){
-                                loc = nt4.get(i);
+                            int totalRegistorPorPagina = 3;
+
+                            if(start==0 || start ==1 ){
+                                start = 0;
+                            }
+                            else{
+                                start = start * totalRegistorPorPagina-3;
+                            }
+
+                            ArrayList<Locacoes> nt5 = locacaoDAO.pesquisaTudoLocacoesTabela(start, totalRegistorPorPagina);
+                            
+                          
+
+                            for(int i = 0; i < nt5.size(); i++){
+                                loc = nt5.get(i);
                                 vidLoc = String.valueOf(loc.getCodigo());
                                 vcliente = loc.getCliente();
                                 vdataInicio = loc.getData_inicio();
@@ -328,7 +422,7 @@
                                     <td>R$ <%=vvalorTotal%></td>
                                     <td>R$ <%=vvalorPago%></td>
                                     <td ><%=vstatusLocacao%></td>
-                                    <td class=""><a href="DeletarLocacao?id=<%=vidLoc%>" onclick="return confirm('Confirma exclusão do registro <%=vidLoc%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
+                                    <td class=""><a href="DeletarLocacao?id=<%=vidLoc%>&idCar=<%=vVeiculoID%>" onclick="return confirm('Confirma exclusão do registro <%=vidLoc%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
                                     <td><a href="#"data-bs-toggle="modal" data-bs-target="#modalEditar<%=vidLoc%>"><i class="fas fa-solid fa-pen me-2 d-flex justify-content-center"></i></a></td>
                                 </tr>
                                 <!-- Final Tabela -->
@@ -395,17 +489,17 @@
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Diaria</label>
-                                                    <input type="number" class="form-control" name="valorDiaria" value="<%=vvalorDiaria%>">
+                                                    <input type="text" class="form-control" name="valorDiaria" value="<%=vvalorDiaria%>">
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Total</label>
-                                                    <input type="number" class="form-control" name="valorTotal" value="<%=vvalorTotal%>">
+                                                    <input type="text" class="form-control" name="valorTotal" value="<%=vvalorTotal%>">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Pago</label>
-                                                    <input type="number" class="form-control" name="valorPago" value="<%=vvalorPago%>">
+                                                    <input type="text" class="form-control" name="valorPago" value="<%=vvalorPago%>">
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                         <label for="exampleInputText">Status Locação</label>
@@ -433,8 +527,28 @@
                             </tbody>
                         </table>
                     </div>
+                        <nav aria-label="Page navigation example position-absolute top-50 start-50 translate-middle">
+                            <ul class="pagination">
+                                <%   
+                                    
+                                Locacoes countObj = locacaoDAO.totalLocacaoAtiva();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                for (int p = 1; p <= paginacao;p++){
+                                %>
+                              <li class="page-item"><a class="page-link" href="index.jsp?page=<%=contadorPag%>"><%=contadorPag%></a></li>
+                                <%  
+                                 contadorPag +=1 ;   }
+                                %>
+                            </ul>
+                        </nav> 
                 </div>
-
             </div>
         </div>
     </div>

@@ -121,7 +121,32 @@
 
             <div class="container-fluid px-4">
                 
+                 <!--  Cards   -->
+                <div class="row g-3 ">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <% 
+                                Funcionario totalFuncionario = new Funcionario();
+                                ManterFuncionario daoTotalFuncionario = new ManterFuncionario();
 
+                                totalFuncionario = daoTotalFuncionario.totalFucnioario();
+
+                                String vTotalFuncionario = String.valueOf(totalFuncionario.getCodigo());
+
+                            %>
+                                <h3 class="fs-2"><%=vTotalFuncionario%></h3>
+                                <p class="fs-5">Funcionarios</p>
+                            </div>
+                            <i class="fas fa-solid fa-users fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+                    
+                </div>        
+                <!-- Final Cards   -->
+                
+                
+                
                 <div class="row my-5 ">
                     <div class="row position-relative">
                         <h3 class="fs-4 mb-3 text-dark">Funcionarios</h3>
@@ -158,7 +183,26 @@
             ManterFuncionario dao =new ManterFuncionario();
             Funcionario ca = new Funcionario();
             
-            ArrayList<Funcionario> nt = dao.pesquisaTudoFuncionario();
+            int start;
+
+            if(request.getParameter("page") == null){
+                start = 0;
+            } else{
+                start = Integer.valueOf(request.getParameter("page"));
+            }
+
+            int totalRegistorPorPagina = 3;
+
+            if(start==0 || start ==1 ){
+                start = 0;
+            }
+            else{
+                start = start * totalRegistorPorPagina-3;
+            }
+            
+            
+            
+            ArrayList<Funcionario> nt = dao.pesquisaTudoFuncionarioTabela(start, totalRegistorPorPagina);
         
             
             for(int i = 0; i < nt.size(); i++){
@@ -250,6 +294,31 @@
                             </tbody>
                         </table>
                     </div>
+                    <nav aria-label="Page navigation example position-absolute top-50 start-50 translate-middle">
+                            <ul class="pagination">
+                                <%   
+                                    
+                                Funcionario countObj =dao.totalFucnioario();
+                                double totalCount = Double.valueOf(countObj.getCodigo());
+                                double paginacao = totalCount/totalRegistorPorPagina;
+                                int contadorPag = 1;
+                                
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
+                                }
+                                
+                                
+                                for (int p = 1; p <= paginacao;p++){
+                                %>
+                                <li class="page-item"><a class="page-link" href="funcionarios.jsp?page=<%=contadorPag%>"><%=contadorPag%></a></li>
+                                <%  
+                                 contadorPag +=1 ;   }
+                                %>
+                            </ul>
+                    </nav>    
+                       
                 </div>
 
             </div>

@@ -72,7 +72,7 @@ public class ManterFuncionario extends DAO{
         ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
         try {
             abrirBanco();
-            String query = "SELECT * FROM funcionarios";
+            String query = "SELECT * FROM funcionarios ORDER BY id";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             Funcionario func;
@@ -95,6 +95,36 @@ public class ManterFuncionario extends DAO{
         }
        return lista;
     }
+    
+    
+    public ArrayList<Funcionario> pesquisaTudoFuncionarioTabela(int start, int total){
+        ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
+        try {
+            abrirBanco();
+            String query = "SELECT * FROM funcionarios ORDER BY id limit "+(start)+","+(total);
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Funcionario func;
+            while(rs.next()){
+                func = new Funcionario();
+               func.setCodigo(rs.getInt("id"));
+               func.setNome(rs.getString("nome"));
+               func.setCpf(rs.getString("cpf"));
+               func.setEndereco(rs.getString("endereco"));
+               func.setCep(rs.getString("cep"));
+               func.setTelefone(rs.getString("telefone"));
+               func.setEmail(rs.getString("email"));
+               func.setSenha(rs.getString("senha"));
+               lista.add(func);
+            }
+            fecharBanco();
+           
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return lista;
+    }
+    
     
     public Funcionario login(String email, String senha) {
         Funcionario ntcben = new Funcionario();
@@ -124,4 +154,26 @@ public class ManterFuncionario extends DAO{
         }
         return null;
     }
+    
+    
+    
+     public Funcionario totalFucnioario(){
+        Funcionario func = new Funcionario();
+        try {
+            abrirBanco();
+            String query = "select count(*) as totalId from funcionarios;";
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+               func.setCodigo(rs.getInt("totalId"));
+            }
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return func;
+    } 
+     
+     
+     
 }
