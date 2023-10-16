@@ -45,9 +45,13 @@ public class DAO {
      }    
     
     public void fecharBanco() throws Exception{//criando metodo que fechao conex?o com o banco
-       if (ps!= null) { //limpando os dados de conex?o   
+       if (ps != null) { //limpando os dados de conex?o   
             ps.close();//fechando o ambiente de conex?o
+           
             System.out.println("Execu?ao da Query fechada\n");
-    }  
-        } 
+            
+       }  
+        con.close();
+        System.out.println("conexao encerrada");
+    } 
 }

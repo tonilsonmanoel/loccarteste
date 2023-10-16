@@ -97,6 +97,46 @@ public class ManterLocacoes extends DAO{
        return lista;
     }
     
+    public ArrayList<Locacoes> pesquisaLocacoesAtivaTabela(int start, int total){
+        ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
+        try {
+            abrirBanco();
+            String query = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+                            "FROM locacoes as L\n" +
+                            "inner join veiculos as V ON L.veiculos_id = V.id\n" +
+                            "inner join cliente as C ON L.clientes_id = C.id\n" +
+                            "inner join cores as CR ON V.cores_id = CR.id\n" +
+                            "inner join modelos as M ON V.modelos_id = M.id where status_locacao='ALUGADO' ORDER BY id limit "+(start)+","+(total);
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Locacoes vei;
+            while(rs.next()){
+                vei = new Locacoes();
+                vei.setCodigo(rs.getInt("id"));
+                vei.setData_inicio(rs.getString("data_inicio"));
+                vei.setData_termino(rs.getString("data_termino"));
+                vei.setData_inicioFormat(rs.getString("dataInicioFormat"));
+                vei.setData_terminoFormat(rs.getString("dataTerminoFormat"));
+                vei.setValor_diaria(rs.getDouble("valor_diaria"));
+                vei.setValor_locacao(rs.getDouble("valor_locacao"));
+                vei.setValor_pago(rs.getDouble("valor_pago"));
+                vei.setStatusLocacoes(rs.getString("status_locacao"));
+                vei.setPlaca_id(rs.getInt("veiculos_id"));
+                vei.setCliente_id(rs.getInt("clientes_id"));
+                vei.setCliente(rs.getString("Cliente"));
+                vei.setCor(rs.getString("Cor"));
+                vei.setPlaca(rs.getString("Placa"));
+                vei.setModelo(rs.getString("Modelo"));
+                lista.add(vei);
+            }
+            fecharBanco();
+             
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+       return lista;
+    }
+    
     public void deletarLocacao(Locacoes c){
         try {
             abrirBanco();
@@ -214,4 +254,39 @@ public class ManterLocacoes extends DAO{
         }
        return func;
     } 
+    public ArrayList<Locacoes> buscarLocacacoe(String buscar){
+       
+        ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
+        try {
+            abrirBanco();
+            String query = buscar;
+            ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            Locacoes loc;
+            
+             while(rs.next()){
+                loc = new Locacoes();
+                loc.setCodigo(rs.getInt("id"));
+                loc.setData_inicio(rs.getString("data_inicio"));
+                loc.setData_termino(rs.getString("data_termino"));
+                loc.setData_inicioFormat(rs.getString("dataInicioFormat"));
+                loc.setData_terminoFormat(rs.getString("dataTerminoFormat"));
+                loc.setValor_diaria(rs.getDouble("valor_diaria"));
+                loc.setValor_locacao(rs.getDouble("valor_locacao"));
+                loc.setValor_pago(rs.getDouble("valor_pago"));
+                loc.setStatusLocacoes(rs.getString("status_locacao"));
+                loc.setPlaca_id(rs.getInt("veiculos_id"));
+                loc.setCliente_id(rs.getInt("clientes_id"));
+                loc.setCliente(rs.getString("Cliente"));
+                loc.setCor(rs.getString("Cor"));
+                loc.setPlaca(rs.getString("Placa"));
+                loc.setModelo(rs.getString("Modelo"));
+                lista.add(loc);
+            }
+            fecharBanco();
+        } catch(Exception e){
+            System.out.println("Erro:" + e.getMessage());
+        }
+        return lista;
+    }
 }

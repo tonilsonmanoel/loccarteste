@@ -12,8 +12,9 @@ import java.sql.SQLException;
  * @author User
  */
 public class TestCon {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, Exception {
         DAO dao = new DAO();
         dao.abrirBanco();
+        dao.fecharBanco();
     }
 }
