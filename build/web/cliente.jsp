@@ -96,6 +96,8 @@
                 
                 <a href="funcionarios.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-user-tie me-2"></i>Funcionarios</a>
+                         <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-file me-2"></i>Histórico</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>

@@ -92,6 +92,14 @@
         <servlet-name>ServletDeletaCor</servlet-name>
         <servlet-class>br.com.bean.ServletDeletaCor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServertBuscar</servlet-name>
+        <servlet-class>br.com.bean.ServertBuscar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServertRelatorio</servlet-name>
+        <servlet-class>br.com.bean.ServertRelatorio</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletCadastroCliente</servlet-name>
         <url-pattern>/CadastroCliente</url-pattern>
@@ -183,6 +191,14 @@
     <servlet-mapping>
         <servlet-name>ServletDeletaCor</servlet-name>
         <url-pattern>/DeletaCor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServertBuscar</servlet-name>
+        <url-pattern>/ServertBuscar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServertRelatorio</servlet-name>
+        <url-pattern>/ServertRelatorio</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -10,7 +10,15 @@ package br.com.controle;
  * @author Tonilson
  */
 public class Locacoes {
-    int codigo, placa_id,cliente_id;
+    int codigo, placa_id,cliente_id,modelo_id;
+
+    public int getModelo_id() {
+        return modelo_id;
+    }
+
+    public void setModelo_id(int modelo_id) {
+        this.modelo_id = modelo_id;
+    }
     String data_inicio,data_termino,data_inicioFormat,data_terminoFormat, statusLocacoes,cliente,placa,modelo,cor;
     double valor_diaria, valor_locacao, valor_pago;
     

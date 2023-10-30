@@ -35,26 +35,43 @@ public class ServertBuscar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           String marca = request.getParameter("marcaveiculos");
+            String marca="todos";
+           if(!"todos".equals(request.getParameter("modeloVeiculo"))){
+               marca = " M.nome='"+request.getParameter("modeloVeiculo")+"'";
+           }
+           
            String buscar ="";
            Locacoes loc = new Locacoes();
             ManterLocacoes daoLoc = new ManterLocacoes();
             
-           ArrayList<Locacoes> listarLoc;
+           ArrayList<Locacoes> listarLoc ;
            
-           if(marca == "todos"){
-               buscar = "SELECT * FROM locacoes";
-               listarLoc = daoLoc.buscarLocacacoe(buscar);
-           }else{
-               
-               buscar = "SELECT * FROM locacoes Where "+ marca;
-               listarLoc = daoLoc.buscarLocacacoe(buscar);
+           
+           if(marca.equals("todos")){
+              buscar = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+"FROM locacoes as L \n" +
+"inner join veiculos as V ON L.veiculos_id = V.id\n" +
+"inner join cliente as C ON L.clientes_id = C.id\n" +
+"inner join cores as CR ON V.cores_id = CR.id\n" +
+"inner join modelos as M ON V.modelos_id = M.id";
+           } else{
+                buscar = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+"FROM locacoes as L \n" +
+"inner join veiculos as V ON L.veiculos_id = V.id\n" +
+"inner join cliente as C ON L.clientes_id = C.id\n" +
+"inner join cores as CR ON V.cores_id = CR.id\n" +
+"inner join modelos as M ON V.modelos_id = M.id where"+ marca;
            }
            
-           System.out.println(marca);
+              
+               
+        System.out.println(marca);
+           System.out.println(buscar);
+     
            
-           request.setAttribute("locacoesHistorico", listarLoc);
-           request.getRequestDispatcher("historico.jsp$search=true").forward(request, response); 
+           request.setAttribute("locacoesHistorico", buscar);
+          
+           request.getRequestDispatcher("historicoresult.jsp").forward(request, response); 
            
         } catch (Exception e ){
             System.out.println("Error"+ e.getMessage());

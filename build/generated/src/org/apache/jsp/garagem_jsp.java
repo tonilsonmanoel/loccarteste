@@ -689,7 +689,7 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <div class=\"modal-body p-5\">\n");
       out.write("                        <form  action=\"EditarCor\" method=\"POST\">\n");
       out.write("                            <div class=\"form-group margin-input\">\n");
-      out.write("                                  <label for=\"exampleInputText\">Modelo a cor para editar</label>\n");
+      out.write("                                  <label for=\"exampleInputText\">Cor para editar</label>\n");
       out.write("                                  <select class=\"form-select\" aria-label=\"Default select example\" name=\"idCor\">\n");
       out.write("                                    <option selected>Selecione a Cor </option>\n");
       out.write("                                                        ");
@@ -876,7 +876,7 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                <!-- Iniciar tabela -->\n");
       out.write("                <div class=\"row my-5 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
-      out.write("                        <h3 class=\"fs-4 mb-3 text-dark\">Garagem</h3>\n");
+      out.write("                        <h3 class=\"fs-4 mb-3 text-success\">Garagem</h3>\n");
       out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar position-absolute top-50 end-0 translate-middle-y \" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">Cadastrar</button>\n");
       out.write("                    </div>\n");
       out.write("                    <div class=\"col\">\n");
@@ -1135,10 +1135,12 @@ public final class garagem_jsp extends org.apache.jasper.runtime.HttpJspBase
                                 double totalCount = Double.valueOf(countObj.getId());
                                 double paginacao = totalCount/totalRegistorPorPagina;
                                 int contadorPag = 1;
-                                if(paginacao % 2 != 0){
-                                    paginacao += + 1;
+                                if(paginacao != (int) paginacao){
+                                    if(paginacao % 2 != 0){
+                                        paginacao +=1;
+                                    }
                                 }
-                                for (int p = 1; p < paginacao;p++){
+                                for (int p = 1; p <= paginacao;p++){
                                 
       out.write("\n");
       out.write("                                <li class=\"page-item\"><a class=\"page-link\" href=\"garagem.jsp?page=");

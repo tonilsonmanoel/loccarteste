@@ -20,7 +20,7 @@ public class ManterLocacoes extends DAO{
         ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
         try {
             abrirBanco();
-            String query = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+            String query = "SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo, M.id as ModeloID\n" +
                             "FROM locacoes as L\n" +
                             "inner join veiculos as V ON L.veiculos_id = V.id\n" +
                             "inner join cliente as C ON L.clientes_id = C.id\n" +
@@ -46,6 +46,7 @@ public class ManterLocacoes extends DAO{
                 vei.setCor(rs.getString("Cor"));
                 vei.setPlaca(rs.getString("Placa"));
                 vei.setModelo(rs.getString("Modelo"));
+                vei.setModelo_id(rs.getInt("ModeloID"));
                 lista.add(vei);
             }
             fecharBanco();
@@ -259,7 +260,7 @@ public class ManterLocacoes extends DAO{
         ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
         try {
             abrirBanco();
-            String query = buscar;
+            String query =buscar;
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             Locacoes loc;
@@ -282,6 +283,7 @@ public class ManterLocacoes extends DAO{
                 loc.setPlaca(rs.getString("Placa"));
                 loc.setModelo(rs.getString("Modelo"));
                 lista.add(loc);
+                
             }
             fecharBanco();
         } catch(Exception e){

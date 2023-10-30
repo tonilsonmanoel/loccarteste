@@ -427,7 +427,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                \n");
       out.write("                <div class=\"row my-3 \">\n");
       out.write("                    <div class=\"row position-relative\">\n");
-      out.write("                        <h3 class=\"fs-4 mb-3 text-dark col \">Locações Ativas</h3>\n");
+      out.write("                        <h3 class=\"fs-4 mb-3 text-success col \">Locações Ativas</h3>\n");
       out.write("                        \n");
       out.write("                        <button type=\"button\" class=\"btn btn-primary botao_cadastrar \" style =\"margin-right: 10px; width: 150px; \" data-bs-toggle=\"modal\" data-bs-target=\"#ModalPagamento\">Pagamento</button>\n");
       out.write("                        <button type=\"button\" class=\"btn btn-primary  botao_cadastrar col \"  data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">Cadastrar</button>\n");
@@ -492,7 +492,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
                                 start = start * totalRegistorPorPagina-3;
                             }
 
-                            ArrayList<Locacoes> nt5 = locacaoDAO.pesquisaTudoLocacoesTabela(start, totalRegistorPorPagina);
+                            ArrayList<Locacoes> nt5 = locacaoDAO.pesquisaLocacoesAtivaTabela(start, totalRegistorPorPagina);
                             
                           
 
