@@ -4,6 +4,8 @@
     Author     : Tonilson
 --%>
 
+<%@page import="br.com.controle.Cliente"%>
+<%@page import="br.com.DAO.ManterCliente"%>
 <%@page import="br.com.controle.Modelo"%>
 <%@page import="br.com.controle.Modelo"%>
 <%@page import="br.com.DAO.ManterModelo"%>
@@ -28,7 +30,7 @@
          <div class="d-flex" id="wrapper">       
 
         <!-- Sidebar -->
-        <div class="bg-white" id="sidebar-wrapper">
+        <div class="bg-white " id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
             <div class="list-group list-group-flush my-3">
@@ -66,15 +68,19 @@
                 </button>
             </nav>
             
-            <div class="container-fluid px-4">
-                <div class="row g-4">  
+            <div class="container-fluid px-4 ">
+                
                     
-                    <form action="" method="POST">
+                
                
-                        <div class="col-md-3">
-                            <input type="text" class="form-control col-md-3" name="search" placeholder="Buscar">
+                    
+                    <form action="" method="GET">
+               <div class="container text-center bg-light p-2 rounded shadow-sm ">
+                   <div class="row p-2">
+                        <div class="col">
+                            <input type="text" class="form-control col-md-3" name="search" placeholder="Buscar Placa">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <select class="form-select" aria-label="Default select example" name="modelo">
                                <option value="" selected>Automovel</option>
                                 <%  
@@ -97,24 +103,77 @@
 
                                     <% } %>
                             </select>
+                            
                         </div>
-                           
+                            <div class="col ">
+                            <select class="form-select" aria-label="Default select example" name="cliente">
+                                <option selected value="">Selecione Cliente</option>
+                                  <%
+                            String vid = "";
+                            String vnomeCliente = "";
+                            String vcpfCliente ="";
+                            ManterCliente dao = new ManterCliente();
+                            Cliente ca = new Cliente();
+
+                            ArrayList<Cliente> nt = dao.pesquisarTudoCliente();
+
+                            for(int i = 0; i < nt.size(); i++){
+                                ca = nt.get(i);
+                                vid = String.valueOf(ca.getCodigo());
+                                vnomeCliente = String.valueOf(ca.getNome());
+                                vcpfCliente = ca.getCpf();
+                
+                            
+                            %>
+                                <option value="<%=vid%>"><%=vnomeCliente%> | CPF: <%=vcpfCliente%></option>
+                                <% } %>
+                            </select>
+                        </div>
+                              
+                            <div class="col">
+                                <select class="form-select"  name="situacao">
+                                    <option value="" selected>Situação</option>
+                                    <option value="ALUGADO">ALUGADO</option>
+                                      <option value="ENCERRADO">ENCERRADO</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                    <div class="row align-items-center">
+                            <div class="form-group  col-2">
+                                
+                                <label for="exampleInputText">Data Locação</label>
+                                <input type="date" class="form-control" name="dataLocacao" >
+                            </div>
+                            <div class="form-group  col-2">
+                                <label for="exampleInputText">Data Termino</label>
+                                <input type="date" class="form-control" name="dataTermino" >
+                            </div>
+                        <div class="form-group col-1 ">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                         <div class="form-group col-1 ">
+                             <a href="ServertRelatorio" class="btn btn-primary">Relatorio</a>
+                        </div>
                         
-                         
-                        <button type="submit" class="btn btn-primary">Buscar</button>
-                           
+                        
+                          
+                    </div>        
+                            
+                </div>  
+                      
                   </form>
                 
                 </div>
             
                            
-                           <a href="ServertRelatorio" class="btn btn-primary">Relatorio</a>
+                          
                              
         
         <!-- Inicio Tabela -->
-                    <div class="row my-5">
+                    <div class="row my-5 px-4">
                         <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover table-striped">
+                        <table class="table bg-white rounded shadow-sm  table-hover table-striped ">
                             <thead>
                                 <tr>
                                     <th scope="col" width="50">#</th>
@@ -136,7 +195,6 @@
                     <% 
                        
                       
-                       ManterLocacoes daoLocacoes = new ManterLocacoes();
                      
                        
                        String vidLoc= "";
@@ -154,16 +212,29 @@
                             String vcliente_id = "";
                             String vdataInicioFormat = "";
                             String vdataTerminoFormat = "";
-                        Locacoes loc = new Locacoes();
-                     ArrayList<Locacoes> listaLoc = daoLocacoes.pesquisaTudoLocacoes();
+                            
+                            
+                     ManterLocacoes daoLocacoes = new ManterLocacoes();
+                     Locacoes loc = new Locacoes();
+                     ArrayList<Locacoes> listaLoc;
                      
-                     
+                     // pesquisar data de locações
+                     String dataInicio = request.getParameter("dataLocacao");
+                     String dataFinal = request.getParameter("dataTermino");
+                  
+                     if((dataInicio != null && !dataInicio.isEmpty()) || (dataFinal != null && !dataFinal.isEmpty()) ){
+                         listaLoc = daoLocacoes.buscarDataLocacoes(dataInicio, dataFinal);
+                     } else{
+                         listaLoc =  daoLocacoes.pesquisaTudoLocacoes();
+                     }
+                     // fim pesquisar data de locações
+                    
                      String modeloVeiculo = request.getParameter("modelo");
                      String corVeiculo = request.getParameter("corVeiculo"); 
                      String situacao = request.getParameter("situacao"); 
                      String searchBar = request.getParameter("search"); 
                      String data = request.getParameter("data"); 
-                     String clienteName = request.getParameter("clienteName"); 
+                     String cliente = request.getParameter("cliente"); 
                     
                     
                        
@@ -173,11 +244,11 @@
                          boolean corEnc = (corVeiculo == null ||corVeiculo.equals("") || loc.getCor().contains(corVeiculo));
                          boolean sit = (situacao == null ||situacao.equals("") || loc.getStatusLocacoes().contains(situacao));
                           boolean searchMatch = (searchBar == null ||searchBar.equals("") || loc.getPlaca().toLowerCase().contains(searchBar.toLowerCase()));
-                         boolean clienteNameMatch = (clienteName == null ||clienteName.equals("") || loc.getCliente().toLowerCase().contains(clienteName.toLowerCase()));
+                         boolean clienteMatch = (cliente == null ||cliente.equals("") || loc.getCliente_id() == Integer.valueOf(cliente));
                     
                          
                         
-                           if(modeloEnc && corEnc && sit && searchMatch && clienteNameMatch ){
+                           if(modeloEnc && corEnc && sit && searchMatch && clienteMatch ){
                                 
                                 vidLoc = String.valueOf(loc.getCodigo());
                                 vcliente = loc.getCliente();
@@ -215,6 +286,8 @@
                                 <%  }} %>
                             </tbody>
                         </table>
+                           <a href="" class="btn btn-primary"><%=dataInicio%></a>
+                            <a href="" class="btn btn-primary"><%=dataFinal%></a>
                             </div>
                     </div>            
                    </div>  

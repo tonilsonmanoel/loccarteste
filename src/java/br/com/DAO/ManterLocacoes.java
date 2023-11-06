@@ -255,8 +255,32 @@ public class ManterLocacoes extends DAO{
         }
        return func;
     } 
-    public ArrayList<Locacoes> buscarLocacacoe(String buscar){
-       
+    public ArrayList<Locacoes> buscarDataLocacoes(String dataInicio, String dataFinal){
+        String buscar="SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+                    "FROM locacoes as L \n" +
+                    "inner join veiculos as V ON L.veiculos_id = V.id\n" +
+                    "inner join cliente as C ON L.clientes_id = C.id\n" +
+                    "inner join cores as CR ON V.cores_id = CR.id\n" +
+                    "inner join modelos as M ON V.modelos_id = M.id ";
+        System.out.println(dataInicio);
+        System.out.println(dataFinal);
+        if(dataInicio != null && dataFinal != null){
+            buscar +="WHERE (L.data_inicio >= '"+dataInicio+"' && L.data_inicio <= '"+dataFinal+"') ORDER BY id";
+            
+        } 
+        if(dataInicio != null && (dataFinal == null || dataFinal.equals(""))){System.out.println("estou if Data inicio");
+           buscar="SELECT L.*,DATE_FORMAT(data_inicio, '%d/%m/%Y') AS dataInicioFormat,DATE_FORMAT(data_termino, '%d/%m/%Y') AS dataTerminoFormat,C.nome as Cliente, V.placa as Placa,CR.nome as Cor, M.nome as Modelo\n" +
+                    "FROM locacoes as L \n" +
+                    "inner join veiculos as V ON L.veiculos_id = V.id\n" +
+                    "inner join cliente as C ON L.clientes_id = C.id\n" +
+                    "inner join cores as CR ON V.cores_id = CR.id\n" +
+                    "inner join modelos as M ON V.modelos_id = M.id WHERE L.data_inicio >= '"+dataInicio+ "' ORDER BY id";   
+            
+        }
+        if(dataInicio == null && dataFinal != null) {
+            buscar +="WHERE L.data_inicio <= '"+dataFinal+ "' ORDER BY id";
+        }
+        
         ArrayList<Locacoes> lista = new ArrayList<Locacoes>();
         try {
             abrirBanco();
