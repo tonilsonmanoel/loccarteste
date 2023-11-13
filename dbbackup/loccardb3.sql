@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Nov-2023 às 18:38
+-- Tempo de geração: 13-Nov-2023 às 19:53
 -- Versão do servidor: 5.5.27
 -- versão do PHP: 8.2.0
 
@@ -46,7 +46,8 @@ INSERT INTO `cliente` (`id`, `nome`, `cpf`, `endereco`, `telefone`, `email`, `ce
 (3, 'Marcos Heitor Farias', '452.428.580-60', 'Rua Cacau', '(96) 3724-4979', 'marcos_farias@onset.com.br', '68908-786'),
 (5, 'Raul Pietro', '021.253.396-76', 'Rua K', '(82) 99789-8962', 'raul-barbosa78@vizzacchi.com.br', '57010-795'),
 (8, 'Pedro', '778.125.443-05', 'QR 311 ch4', '61983753695', 'pedro@gotmail.com', '72307108'),
-(12, 'Manoel', '152.154.656-00', 'QR 122', '61983753655', 'maonel@gmail.com', '64641-565');
+(12, 'Manoel', '152.154.656-00', 'QR 122', '61983753655', 'maonel@gmail.com', '64641-565'),
+(19, 'Rita Clara Gomes', '056.452.474-34', 'Rua Parecis', '(43) 99605-5918', 'ritaclaragomes@gmail.com', '86183-200');
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,8 @@ INSERT INTO `cores` (`id`, `nome`) VALUES
 (1, 'Preto'),
 (2, 'Azul'),
 (3, 'Vermelho'),
-(6, 'Branco');
+(6, 'Branco'),
+(9, 'Prata');
 
 -- --------------------------------------------------------
 
@@ -98,7 +100,7 @@ INSERT INTO `funcionarios` (`id`, `nome`, `cpf`, `endereco`, `cep`, `telefone`, 
 (15, 'Tonilsonx', '888.55.44.56', 'QR 311 Conjunto 8', '72307-108', '61983753695', 'tonilsonx360@gmail.com', '@admin99', '239082', NULL),
 (7, 'Joao ', '122.255.255-55', 'QR 321 cj3', '72307108', '6198354653', 'joao2@gmail.com', 'joao123', NULL, NULL),
 (16, 'Tonilson Silva', '888554646', 'QR 311 Conjunto 8', '75333-555', '6198355466', 'tnnovidades@gmail.com', '@admin', '1004789', NULL),
-(17, 'Admin2', '854.654.654-65', 'QR 211', '85633-265', '(56) 54654-6546', 'admin2@admin2.com', 'admin', NULL, 1);
+(18, 'Tonilson Manoel', '054.546.578-98', 'QR 355 Samambaia', '72308-565', '(61) 98654-9999', 'tonilsonmanoel@gmail.com', '@admin123', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -134,7 +136,8 @@ INSERT INTO `locacoes` (`id`, `data_inicio`, `data_termino`, `valor_diaria`, `va
 (36, '2023-11-12', '2023-11-13', '35.00', '110.15', '2.50', 'ALUGADO', 9, 12),
 (37, '2023-11-12', '2023-11-14', '55.55', '355.33', '5.00', 'ALUGADO', 3, 5),
 (38, '2023-11-13', '2023-11-14', '10.50', '50.00', '0.00', 'ENCERRADO', 11, 8),
-(39, '2023-11-13', '2023-11-15', '20.00', '115.00', '0.00', 'ALUGADO', 11, 12);
+(39, '2023-11-13', '2023-11-15', '20.00', '115.00', '5.00', 'ALUGADO', 11, 12),
+(41, '2023-11-13', '2023-11-15', '45.00', '120.00', '50.00', 'ALUGADO', 17, 19);
 
 -- --------------------------------------------------------
 
@@ -157,7 +160,8 @@ INSERT INTO `marcas` (`id`, `nome`) VALUES
 (3, 'Chevrolet'),
 (6, 'Hyundai'),
 (7, 'Renault '),
-(11, 'JEEP');
+(11, 'JEEP'),
+(12, 'Peugeot');
 
 -- --------------------------------------------------------
 
@@ -183,6 +187,7 @@ INSERT INTO `modelos` (`id`, `nome`, `marcas_id`) VALUES
 (7, 'HB20', 6),
 (9, 'Kwid', 7),
 (10, 'Renagade', 9),
+(14, '208 Like', 12),
 (13, 'Renegade', 11);
 
 -- --------------------------------------------------------
@@ -213,7 +218,8 @@ INSERT INTO `veiculos` (`id`, `placa`, `ano`, `disponibilidade`, `modelos_id`, `
 (13, 'DLA-2131', 2023, 'DISPONIVEL', 2, 1),
 (9, '222-4565', 2022, 'DISPONIVEL', 7, 2),
 (10, '555-2177', 2011, 'ALUGADO', 7, 3),
-(11, 'BRA-1E23', 2022, 'ALUGADO', 9, 6);
+(11, 'BRA-1E23', 2022, 'ALUGADO', 9, 6),
+(17, 'CMG-6533', 2023, 'ALUGADO', 14, 9);
 
 --
 -- Índices para tabelas despejadas
@@ -274,43 +280,43 @@ ALTER TABLE `veiculos`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `cores`
 --
 ALTER TABLE `cores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `locacoes`
 --
 ALTER TABLE `locacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `modelos`
 --
 ALTER TABLE `modelos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `veiculos`
 --
 ALTER TABLE `veiculos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
