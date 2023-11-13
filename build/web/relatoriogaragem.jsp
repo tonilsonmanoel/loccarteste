@@ -1,6 +1,8 @@
 
 
 <%@page import="br.com.controle.Funcionario"%>
+<%@page import="br.com.controle.Marca"%>
+<%@page import="br.com.DAO.ManterMarca"%>
 <%@page import="br.com.DAO.ManterModelo"%>
 <%@page import="br.com.controle.Modelo"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,11 +21,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styles3.css" />
-    <title>Relatorio</title>
+    <title>Relatorio Garagem</title>
 </head>
 
 <body>
-     <%  
+    <%  
         Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
         System.out.print(user);
 
@@ -34,13 +36,11 @@
         
         if(user != null){}
     %>
-   
     <div class="d-flex" id="wrapper">
 
-         
 
         <!-- Sidebar -->
-        <div class="bg-white" id="sidebar-wrapper">
+        <div class="bg-white " id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
             <div class="list-group list-group-flush my-3">
@@ -85,7 +85,7 @@
                 
                 
                      <form action="ServertRelatorio" method="POST">
-                         <input hidden="true" name="tipoRelatorio" value="locacoesRelatorio">
+                      <input hidden="true" name="tipoRelatorio" value="garagemRelatorio">
                <div class="container text-center bg-light p-2 rounded shadow-sm ">
                    <div class="row p-1">
                        <div class="col">
@@ -96,7 +96,7 @@
                     <div class="row p-1  ">
                          <div class="col d-flex justify-content-start  gap-2">
                              <label>Tipo de relatório:&nbsp&nbsp   </label>
-                             <a href="relatorio.jsp"><button  type="button" class="btn btn-primary p-1">Locações</button></a>
+                            <a href="relatorio.jsp"><button  type="button" class="btn btn-primary p-1">Locações</button></a>
                              <a href="relatoriogaragem.jsp"><button type="button"  class="btn btn-primary p-1">Garagem</button></a>
                              <a href="relatoriocliente.jsp"><button type="button"  class="btn btn-primary p-1">Cliente</button></a>
                              <a href="relatoriofuncionarios.jsp"><button type="button" class="btn btn-primary p-1">Funcionarios</button></a>
@@ -108,12 +108,11 @@
                        
                         <div class="col">
                             <select class="form-select" aria-label="Default select example" name="modelo">
-                               <option value="" selected>Automovel</option>
+                               <option value="" selected>Modelo</option>
                                 <%  
                                     String modeloNome = "";
                                     String modeloId = "";
-                                    String marcasID = "";
-                                    String marcasNome="";
+                                    
                                     
                                     ManterModelo modelodao = new ManterModelo();
                                     Modelo modelo = new Modelo();
@@ -123,61 +122,64 @@
                                         modelo = arryModelo.get(a);
                                         modeloNome = modelo.getNome();
                                         modeloId = String.valueOf(modelo.getId());
-                                        marcasNome = String.valueOf(modelo.getMarca());
+                                        
                                 %>
-                                        <option value="<%=modeloId%>">Modelo: <%=modeloNome%> | Marca: <%=marcasNome%></option>
+                                        <option value="<%=modeloId%>">Modelo: <%=modeloNome%></option>
 
                                     <% } %>
                             </select>
-                            
                         </div>
-                        
-                              
-                            <div class="col">
-                                <select class="form-select"  name="situacao">
-                                    <option value="" selected>Situação</option>
-                                    <option value="ALUGADO">ALUGADO</option>
-                                      <option value="ENCERRADO">ENCERRADO</option>
-                                </select>
-                            </div>
-                            
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example" name="marca">
+                               <option value="" selected>Marca</option>
+                                <%  
+                                   
+                                    String marcasID = "";
+                                    String marcaNome="";
+                                    
+                                    ManterMarca daoModelo = new ManterMarca();
+                                    Marca marca = new Marca();
+                                    
+                                    ArrayList<Marca> listMarca = daoModelo.pesquisaTudoMarca();
+                   
+
+                                    for(int a = 0; a < listMarca.size();a++){
+                                        marca = listMarca.get(a);
+                                        marcaNome = marca.getNome();
+                                        marcasID = String.valueOf(marca.getCodigo());
+                                       
+                                %>
+                                        <option value="<%=marcaNome%>">Marca: <%=marcaNome%></option>
+
+                                    <% } %>
+                            </select>
                         </div>
-                    <div class="row align-items-center  p-2">
-                            <div class="form-group  col">
+                             
+                        <div class="col">
+                            <select class="form-select"  name="ano">
+                                <option value="" selected>ANO</option>
                                 
-                                <label for="exampleInputText">Data Locação</label>
-                                <input type="date" class="form-control" name="dataLocacao" >
-                            </div>
-                            <div class="form-group  col">
-                                <label for="exampleInputText">Data Termino</label>
-                                <input type="date" class="form-control" name="dataTermino" >
-                            </div>
+                                <%
+                                  for(int x = 2023; x > 2000; x-- ){
+                                      
+                                  
+
+                                %>
+                                   <option value="<%=x%>"><%=x%></option>   
+                                <%  }%>
+                            </select>
+                        </div>
                         
-                       
-                    </div> 
+                            
+                    </div>
+                   
                     <div class="row align-items-center p-2 d-flex justify-content-evenly">
                         <div class="col">
-                            <select class="form-select" aria-label="Default select example" name="cliente">
-                                <option selected value="">Selecione Cliente</option>
-                                  <%
-                            String vid = "";
-                            String vnomeCliente = "";
-                            String vcpfCliente ="";
-                            ManterCliente dao = new ManterCliente();
-                            Cliente ca = new Cliente();
-
-                            ArrayList<Cliente> nt = dao.pesquisarTudoCliente();
-
-                            for(int i = 0; i < nt.size(); i++){
-                                ca = nt.get(i);
-                                vid = String.valueOf(ca.getCodigo());
-                                vnomeCliente = String.valueOf(ca.getNome());
-                                vcpfCliente = ca.getCpf();
-                
-                            
-                            %>
-                                <option value="<%=vid%>"><%=vnomeCliente%> | CPF: <%=vcpfCliente%></option>
-                                <% } %>
+                            <select class="form-select"  name="disponibilidade">
+                                <option value="" selected>Disponibilidade</option>
+                                <option value="DISPONIVEL">DISPONIVEL</option>
+                                <option value="ALUGADO">ALUGADO</option>
+                                      
                             </select>
                         </div>
                         <div class="form-group col ">

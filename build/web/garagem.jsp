@@ -4,6 +4,7 @@
     Author     : Tonilson
 --%>
 
+<%@page import="br.com.controle.Funcionario"%>
 <%@page import="br.com.controle.Marca"%>
 <%@page import="br.com.DAO.ManterMarca"%>
 <%@page import="br.com.controle.Cor"%>
@@ -25,11 +26,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles3.css" />
     <title>Garagem</title>
 </head>
 
 <body>
+     <%  
+        Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
+        System.out.print(user);
+
+        if(user == null){
+              Thread.sleep(500);
+              response.sendRedirect("login.jsp?alert=1");
+        }
+        
+        if(user != null){}
+    %>
     <div class="d-flex" id="wrapper">
 
         <!-- Modal Cadastro -->
@@ -45,18 +57,18 @@
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Placa</label>
-                                <input type="text" class="form-control" name="placa"  placeholder="888-8888 ">
+                                <input type="text" class="form-control placa" name="placa"  placeholder="888-8888 " required>
                             </div>
                             <div class="form-group margin-input col">
                             <label for="exampleInputText">Ano</label>
-                            <input type="text" class="form-control" name="ano" placeholder="Insira o ano">
+                            <input type="text" class="form-control" name="ano" placeholder="Insira o ano" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Modelo Veiculo</label>
-                                <select class="form-select" aria-label="Default select example" name="modelo">
-                                        <option selected>Selecioner o modelo do veiculo</option>
+                                <select class="form-select" aria-label="Default select example" name="modelo" required>
+                                    <option value="">Selecioner o modelo do veiculo</option>
                                 <%  
                                     String modeloNome = "";
                                     String modeloId = "";
@@ -82,8 +94,8 @@
                         <div class="row">
                            <div class="form-group margin-input col">
                                <label for="exampleInputText">Cor</label>
-                            <select class="form-select" aria-label="Default select example" name="cor">
-                                    <option selected>Selecioner a cor</option>
+                            <select class="form-select" aria-label="Default select example" name="cor" required>
+                                <option value="">Selecioner a cor</option>
                             <%  
                                 String corNome = "";
                                 String corId ="";
@@ -189,7 +201,7 @@
                         <form  action="CadastroMarca" method="POST">
                         <div class="form-group margin-input">
                             <label for="exampleInputText">Nome</label>
-                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -216,8 +228,8 @@
                         <form  action="EditarMarca" method="POST">
                         <div class="form-group margin-input">
                              <label for="exampleInputText">Marca</label>
-                              <select class="form-select" aria-label="Default select example" name="idmarca">
-                                <option selected>Selecione a marca </option>
+                              <select class="form-select" aria-label="Default select example" name="idmarca" required>
+                                  <option value="">Selecione a marca </option>
                                                     <%  
                                                         String marcaNome3 = "";
                                                         String marcaId3 = "";
@@ -239,7 +251,7 @@
                         </div>   
                         <div class="form-group margin-input">
                             <label for="exampleInputText">Nome</label>
-                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                            <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -333,12 +345,12 @@
                         <form  action="CadastroModelo" method="POST">
                             <div class="form-group margin-input">
                                 <label for="exampleInputText">Nome</label>
-                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                             </div>
                             <div class="form-group margin-input">
                              <label for="exampleInputText">Marca</label>
-                              <select class="form-select" aria-label="Default select example" name="idmarca">
-                                <option selected>Selecione a marca </option>
+                              <select class="form-select" aria-label="Default select example" name="idmarca" required>
+                                  <option value="">Selecione a marca </option>
                                                     <%  
                                                         String marcaNomeModelo = "";
                                                         String marcaIdModelo = "";
@@ -385,8 +397,8 @@
                         <form  action="EditarModelo" method="POST">
                             <div class="form-group margin-input">
                                   <label for="exampleInputText">Modelo o modelo para editar</label>
-                                  <select class="form-select" aria-label="Default select example" name="idModelo">
-                                    <option selected>Selecione o modelo </option>
+                                  <select class="form-select" aria-label="Default select example" name="idModelo" required>
+                                      <option value="">Selecione o modelo </option>
                                                         <%  
                                                             String nomeModeloEditar= "";
                                                             String idModeloEditar = "";
@@ -409,13 +421,13 @@
                                  
                             <div class="form-group margin-input">
                                 <label for="exampleInputText">Nome</label>
-                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                             </div>               
                                            
                             <div class="form-group margin-input">
                                   <label for="exampleInputText">Marca</label>
-                                  <select class="form-select" aria-label="Default select example" name="idmarca">
-                                    <option selected>Selecione a marca </option>
+                                  <select class="form-select" aria-label="Default select example" name="idmarca"required>
+                                      <option value="">Selecione a marca </option>
                                                         <%  
                                                             String marcaNomeModelo2 = "";
                                                             String marcaIdModelo2 = "";
@@ -522,7 +534,7 @@
                         <form  action="CadastroCor" method="POST">
                             <div class="form-group margin-input">
                                 <label for="exampleInputText">Nome</label>
-                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                             </div>
                     </div>
                     <div class="modal-footer">
@@ -549,8 +561,8 @@
                         <form  action="EditarCor" method="POST">
                             <div class="form-group margin-input">
                                   <label for="exampleInputText">Cor para editar</label>
-                                  <select class="form-select" aria-label="Default select example" name="idCor">
-                                    <option selected>Selecione a Cor </option>
+                                  <select class="form-select" aria-label="Default select example" name="idCor" required>
+                                      <option value="">Selecione a Cor </option>
                                                         <%  
                                                             String nomeCorEditar= "";
                                                             String idCorEditar = "";
@@ -571,7 +583,7 @@
                             </div>
                             <div class="form-group margin-input">
                                 <label for="exampleInputText">Nome</label>
-                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome">
+                                <input type="text" class="form-control" name="nome"  placeholder="Insira o nome" required>
                             </div>    
                     </div>
                     <div class="modal-footer">
@@ -604,6 +616,8 @@
                         class="fas fa-solid fa-user-tie me-2"></i>Funcionarios</a>
                  <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-file me-2"></i>Histórico</a>
+                <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
@@ -715,8 +729,8 @@
                         <h3 class="fs-4 mb-3 text-success">Garagem</h3>
                         <button type="button" class="btn btn-primary  botao_cadastrar position-absolute top-50 end-0 translate-middle-y " data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
                     </div>
-                    <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover">
+                    <div class="table-responsive">
+                        <table class="table bg-white rounded shadow-sm  table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col" width="50">#</th>
@@ -745,6 +759,7 @@
             ManterVeiculo dao = new ManterVeiculo();
             Veiculos ca = new Veiculos();
             
+            // Parametro para paginação
             int start;
 
             if(request.getParameter("page") == null){
@@ -761,6 +776,7 @@
             else{
                 start = start * totalRegistorPorPagina-4;
             }
+            //Parametro para paginação
             
             ArrayList<Veiculos> nt = dao.pesquisaTudoVeiculoTabela(start,totalRegistorPorPagina);
             
@@ -805,17 +821,17 @@
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Ano</label>
-                                                    <input type="text" class="form-control" name="ano"  value="<%=vano%>">
+                                                    <input type="text" class="form-control" name="ano"  value="<%=vano%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                      <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Placa</label>
-                                                    <input type="text" class="form-control" name="placa"  value="<%=vplaca%>">
+                                                    <input type="text" class="form-control" name="placa"  value="<%=vplaca%>" required>
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Disponibilidade</label>
-                                                    <select class="form-select" aria-label="Default select example" name="disponibilidade">
+                                                    <select class="form-select" aria-label="Default select example" name="disponibilidade" required>
                                                             <option value="<%=vdisponibilidade%>" selected><%=vdisponibilidade%></option>
                                                             <%  if(vdisponibilidade.equals("ALUGADO")){  %>
                                                             <option value="DISPONIVEL">DISPONIVEL</option>
@@ -829,7 +845,7 @@
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                         <label for="exampleInputText">Modelo</label>
-                                                        <select class="form-select" aria-label="Default select example" name="modelo">
+                                                        <select class="form-select" aria-label="Default select example" name="modelo" required>
                                                             <option selected value="<%=vmodelo_id%>">Modelo: <%=vmodelo%> | Marca: <%=vmarca%> </option>
                                                        <%  
                                                                 String modeloNomeEditar = "";
@@ -854,7 +870,7 @@
                                                 <div class="row">
                                                    <div class="form-group margin-input col">
                                                        <label for="exampleInputText">Cor</label>
-                                                    <select class="form-select" aria-label="Default select example" name="cor">
+                                                    <select class="form-select" aria-label="Default select example" name="cor" required>
                                                         <option selected value="<%=vcores_id%>"><%=vcor%></option>
                                                     <%  
                                                         String corNome2 = "";
@@ -930,6 +946,20 @@
             el.classList.toggle("toggled");
         };
     </script>
+    <!--- Jquery e mascaras de campos --->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+    <script>
+        $('.money2').mask("#.##0,00", {reverse: true});
+        $('.cep').mask('00000-000');
+        $('.placa').mask('AAA-AAAA');
+        $('.phone').mask('0000-0000');
+        $('.phone_with_ddd').mask('(00) 0000-0000');
+        $('.mixed').mask('AAA 000-S0S');
+        $('.cpf').mask('000.000.000-00', {reverse: true});
+        $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+    </script>
+    <!--   -->
 </body>
 
 </html>

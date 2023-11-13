@@ -7,6 +7,7 @@ package br.com.bean;
 
 import br.com.DAO.ManterLocacoes;
 import br.com.controle.Locacoes;
+import br.com.controle.Relatorio;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceRgb;
 import com.itextpdf.kernel.geom.PageSize;
@@ -47,7 +48,7 @@ public class ServertRelatorio extends HttpServlet {
             throws ServletException, IOException {
           response.setContentType("application/pdf");
       //  response.setHeader("Content-Disposition", "attachment; filename=arquivo.pdf");
-//
+       /*
         try {
             PdfWriter writer = new PdfWriter(response.getOutputStream());
             PdfDocument pdfDocument = new PdfDocument(writer);
@@ -217,12 +218,52 @@ public class ServertRelatorio extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
+       String tipoRelatorio = request.getParameter("tipoRelatorio");
+       Relatorio relatorios = new Relatorio();
+       RequestDispatcher rd;
+       switch(tipoRelatorio){
+           case "locacoesRelatorio":
+                String dataInicio = request.getParameter("dataLocacao");
+                String dataFinal = request.getParameter("dataTermino");
+                String modeloVeiculo = request.getParameter("modelo");
+                String corVeiculo = request.getParameter("corVeiculo"); 
+                String situacao = request.getParameter("situacao"); 
+                String cliente = request.getParameter("cliente"); 
+
+                
+                relatorios.gerarPdfLocacoes(request, response,dataInicio,dataFinal,modeloVeiculo,corVeiculo,situacao,cliente);
+                rd = request.getRequestDispatcher("relatorio.jsp");
+                rd.forward(request, response);
+                break;
+           case "garagemRelatorio":
+                String modelo = request.getParameter("modelo");
+                String marca = request.getParameter("marca");
+                String ano = request.getParameter("ano");
+                String disponibilidade = request.getParameter("disponibilidade"); 
+                relatorios.gerarPdfGaragem(request, response, modelo, marca, ano, disponibilidade);
+                rd = request.getRequestDispatcher("relatoriogaragem.jsp");
+                rd.forward(request, response);
+                break;
+           case "clientesRelatorio":
+                relatorios.gerarPdfCliente(request, response);
+                rd = request.getRequestDispatcher("relatoriocliente.jsp");
+                rd.forward(request, response);
+                break;
+           case "funcionariosRelatorio":
+                relatorios.gerarPdfFuncionarios(request, response);
+                rd = request.getRequestDispatcher("relatoriofuncionarios.jsp");
+                rd.forward(request, response);
+                break;
+           default:
+               break;
+       }
        
-        
+       
+       
        
       
-        RequestDispatcher rd = request.getRequestDispatcher("historico.jsp");
-            rd.forward(request, response);
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

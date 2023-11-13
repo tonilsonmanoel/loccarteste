@@ -1,4 +1,5 @@
 
+<%@page import="br.com.controle.Decimal"%>
 <%@page import="br.com.controle.Funcionario"%>
 <%@page import="br.com.controle.Contador"%>
 <%@page import="java.util.Date"%>
@@ -22,11 +23,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles3.css" />
     <title>Index</title>
 </head>
 
 <body>
+    <%  
+        Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
+        System.out.print(user);
+
+        if(user == null){
+              Thread.sleep(500);
+              response.sendRedirect("login.jsp?alert=1");
+        }
+        
+        if(user != null){}
+    %>
    
     <div class="d-flex" id="wrapper">
 
@@ -43,8 +55,8 @@
                         <div class="form-group margin-input">
                           
                             <label for="exampleInputText">Cliente</label>
-                            <select class="form-select" aria-label="Default select example" name="cliente">
-                                <option selected>Selecione Cliente</option>
+                            <select class="form-select" aria-label="Default select example" name="cliente" required>
+                                <option value="">Selecione Cliente</option>
                                   <%
                             String vid = "";
                             String vnomeCliente = "";
@@ -69,18 +81,18 @@
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Data Locação</label>
-                                <input type="date" class="form-control" name="dataLocacao" >
+                                <input type="date" class="form-control" name="dataLocacao"  required>
                             </div>
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Data Termino</label>
-                                <input type="date" class="form-control" name="dataTermino" >
+                                <input type="date" class="form-control" name="dataTermino"  required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Automovel Disponivel</label>
-                                <select class="form-select" aria-label="Default select example" name="veiculo">
-                                    <option selected>Selecione Veiculo</option>
+                                <select class="form-select" aria-label="Default select example" name="veiculo" required>
+                                    <option  value="">Selecione Veiculo</option>
                                     <%
                                         String vidVeiculo ="";
                                         String vplacaVeiculo = "";
@@ -110,17 +122,17 @@
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Diaria</label>
-                                <input type="text" class="form-control" name="diaria" placeholder="Insira o valor">
+                                <input type="text" class="form-control money2" name="diaria" placeholder="Insira o valor" required>
                             </div>
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Total </label>
-                                <input type="text" class="form-control" name="valorLocacao" placeholder="Insira o valor">
+                                <input type="text" class="form-control money2" name="valorLocacao" placeholder="Insira o valor" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group margin-input col">
                                 <label for="exampleInputText">Valor Pago</label>
-                                <input type="text" class="form-control" name="valorPago" placeholder="Insira o valor">
+                                <input type="text" class="form-control money2" name="valorPago" placeholder="Insira o valor" required>
                             </div>
                         </div>
                        
@@ -147,8 +159,8 @@
                     <form  action="LocacaoPagamento" method="POST">
                         <div class="form-group margin-input">
                             <label for="exampleInputText">Cliente </label>
-                            <select class="form-select" aria-label="Default select example" name="pagamento">
-                                <option selected>Selecione Cliente</option>
+                            <select class="form-select" aria-label="Default select example" name="pagamento" required>
+                                <option value="">Selecione Cliente</option>
                                  <%
                             String vidLocPag= "";
                             String vclientePag = "";
@@ -182,7 +194,7 @@
                         </div>
                        <div class="form-group margin-input">
                                 <label for="exampleInputText">Valor Pagamento</label>
-                                <input type="text" class="form-control" name="valorPago" placeholder="Insira o valor">
+                                <input type="text" class="form-control money2" name="valorPago" placeholder="Insira o valor" required> 
                                 
                         </div>
                                 
@@ -213,7 +225,9 @@
                 <a href="funcionarios.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-user-tie me-2"></i>Funcionarios</a>
                 <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-solid fa-file me-2"></i>Histórico</a>        
+                        class="fas fa-solid fa-file me-2"></i>Histórico</a>
+                <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
@@ -290,7 +304,7 @@
 
                             %>
                                 <h3 class="fs-2"><%=totalLocacaoAtiva%></h3>
-                                <p class="fs-5">Locações Ativa</p>
+                                <p class="fs-5">Locações Ativa</p><p class="fs-5"></p>
                             </div>
                             <i class="fas fa-solid fa-car-side fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>
@@ -347,6 +361,8 @@
                             </thead>
                             <tbody>
 <%
+                          
+    
                             String vidLoc= "";
                             String vcliente = "";
                             String vdataInicio = "";
@@ -365,7 +381,8 @@
                             
                             ManterLocacoes locacaoDAO =new ManterLocacoes();
                             Locacoes loc = new Locacoes();
-
+                            Decimal descFomart = new Decimal();
+                              
                             int start;
 
                             if(request.getParameter("page") == null){
@@ -397,9 +414,9 @@
                                 vdataTerminoFormat = loc.getData_terminoFormat();
                                 vplaca = loc.getPlaca();
                                 vautomovel = loc.getModelo();
-                                vvalorDiaria =  String.valueOf(loc.getValor_diaria());
-                                vvalorTotal =   String.valueOf(loc.getValor_locacao());
-                                vvalorPago =    String.valueOf(loc.getValor_pago());
+                                vvalorDiaria =  String.valueOf(descFomart.getDecimalFormat(loc.getValor_diaria()));
+                                vvalorTotal =   String.valueOf(descFomart.getDecimalFormat(loc.getValor_locacao()));
+                                vvalorPago =    String.valueOf(descFomart.getDecimalFormat(loc.getValor_pago()));
                                 vstatusLocacao = loc.getStatusLocacoes();
                                 vCorLoc = loc.getCor();
                                 vVeiculoID = String.valueOf(loc.getPlaca_id());
@@ -441,24 +458,24 @@
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Cliente</label>
                                                     <input readonly type="text" class="form-control"  value="<%=vcliente%>">
-                                                    <input hidden type="text" class="form-control" name="cliente"  value="<%=vcliente_id%>">
+                                                    <input hidden type="text" class="form-control" name="cliente"  value="<%=vcliente_id%>" >
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Data Locação</label>
-                                                    <input type="date" class="form-control" name="dataInicio" value="<%=vdataInicio%>" >
+                                                    <input type="date" class="form-control" name="dataInicio" value="<%=vdataInicio%>" required>
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Data Termino</label>
-                                                    <input type="date" class="form-control" name="dataTermino" value="<%=vdatatermino%>">
+                                                    <input type="date" class="form-control" name="dataTermino" value="<%=vdatatermino%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                         
                                                         <label for="exampleInputText">Automoveis Disponiveis</label>
-                                                        <select class="form-select" aria-label="Default select example" name="veiculo">
+                                                        <select class="form-select" aria-label="Default select example" name="veiculo" required>
                                                             <option selected value="<%=vVeiculoID%>">Automovel Atual: <%=vautomovel%> | Placa: <%=vplaca%> </option>
                                                             <%
                                                                 String vidVeiculoEditar ="";
@@ -485,21 +502,21 @@
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Diaria</label>
-                                                    <input type="text" class="form-control" name="valorDiaria" value="<%=vvalorDiaria%>">
+                                                    <input type="text" class="form-control money2" name="valorDiaria" value="<%=vvalorDiaria%>" required>
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Total</label>
-                                                    <input type="text" class="form-control" name="valorTotal" value="<%=vvalorTotal%>">
+                                                    <input type="text" class="form-control money2" name="valorTotal" value="<%=vvalorTotal%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group margin-input col">
                                                     <label for="exampleInputText">Valor Pago</label>
-                                                    <input type="text" class="form-control" name="valorPago" value="<%=vvalorPago%>">
+                                                    <input type="text" class="form-control money2" name="valorPago" value="<%=vvalorPago%>" required>
                                                     </div>
                                                     <div class="form-group margin-input col">
                                                         <label for="exampleInputText">Status Locação</label>
-                                                        <select class="form-select" aria-label="Default select example" name="status">
+                                                        <select class="form-select" aria-label="Default select example" name="status" required>
                                                             <option value="ALUGADO" selected>ALUGADO</option>
                                                             <option value="ENCERRADO">ENCERRADO</option>
                                                             
@@ -563,7 +580,19 @@
         
         
     </script>
-    
+    <!--- Jquery e mascaras de campos --->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+    <script>
+        $('.money2').mask("#.##0,00", {reverse: true});
+        $('.cep').mask('00000-000');
+        $('.phone').mask('0000-0000');
+        $('.phone_with_ddd').mask('(00) 00000-0000');
+        $('.mixed').mask('AAA 000-S0S');
+        $('.cpf').mask('000.000.000-00', {reverse: true});
+        $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+    </script>
+    <!--   -->
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 :root {
      --main-bg-color: #009d63;
-    --main-text-color: #009d63;s
-    --second-text-color: #bbbec5;
+    --main-text-color: #009d63;
+    --second-text-color: #000000;
     --second-bg-color: #c1efde;
   }
   
@@ -29,8 +29,10 @@
     overflow-x: hidden;
     background: url(../image/image1.jpg) no-repeat;
     background-size: cover;
+   
     background-position: center;
-    height: 100vh;
+    min-height:100vh ;
+    
   }
   
   #sidebar-wrapper {

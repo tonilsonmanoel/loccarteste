@@ -11,6 +11,12 @@ import br.com.controle.Locacoes;
 import br.com.controle.Veiculos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +38,7 @@ public class ServletCadastroLocacao extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -45,6 +51,15 @@ public class ServletCadastroLocacao extends HttpServlet {
             double valorPago = Double.valueOf(request.getParameter("valorPago").replace(',', '.'));
             String situacao = "ALUGADO";
             
+            // Diferença dias entre datas da locação ERROR
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataInicio = sdf.parse(dataLocacao);
+            Date dataFim = sdf.parse(dataLocacao);
+            
+            long diffEmMil = Math.abs(dataInicio.getTime() -dataFim.getTime());
+            long diff = TimeUnit.DAYS.convert(diffEmMil, TimeUnit.SECONDS);
+            // fim Diferença dias
+            
             Locacoes loc = new Locacoes();
             loc.setCliente_id(idCliente);
             loc.setData_inicio(dataLocacao);
@@ -55,7 +70,9 @@ public class ServletCadastroLocacao extends HttpServlet {
             loc.setValor_locacao(valorLocacao);
             loc.setValor_pago(valorPago);
             
+           
             
+           
             ManterLocacoes daoLocacao = new ManterLocacoes();
             daoLocacao.cadastrarLocacao(loc);
             
@@ -82,7 +99,11 @@ public class ServletCadastroLocacao extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletCadastroLocacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -96,7 +117,11 @@ public class ServletCadastroLocacao extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletCadastroLocacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

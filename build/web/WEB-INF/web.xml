@@ -100,6 +100,14 @@
         <servlet-name>ServertRelatorio</servlet-name>
         <servlet-class>br.com.bean.ServertRelatorio</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletEsqueceuSenha</servlet-name>
+        <servlet-class>br.com.bean.ServletEsqueceuSenha</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletRedefinirSenha</servlet-name>
+        <servlet-class>br.com.bean.ServletRedefinirSenha</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletCadastroCliente</servlet-name>
         <url-pattern>/CadastroCliente</url-pattern>
@@ -199,6 +207,14 @@
     <servlet-mapping>
         <servlet-name>ServertRelatorio</servlet-name>
         <url-pattern>/ServertRelatorio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEsqueceuSenha</servlet-name>
+        <url-pattern>/EsqueceuSenha</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletRedefinirSenha</servlet-name>
+        <url-pattern>/RedefinirSenha</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

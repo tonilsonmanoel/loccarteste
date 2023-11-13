@@ -4,6 +4,8 @@
     Author     : Tonilson
 --%>
 
+<%@page import="br.com.controle.Decimal"%>
+<%@page import="br.com.controle.Funcionario"%>
 <%@page import="br.com.controle.Cliente"%>
 <%@page import="br.com.DAO.ManterCliente"%>
 <%@page import="br.com.controle.Modelo"%>
@@ -23,10 +25,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles3.css" />
     <title>Historico</title>
     </head>
     <body>
+         <%  
+        Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
+        System.out.print(user);
+
+        if(user == null){
+              Thread.sleep(500);
+              response.sendRedirect("login.jsp?alert=1");
+        }
+        
+        if(user != null){}
+    %>
          <div class="d-flex" id="wrapper">       
 
         <!-- Sidebar -->
@@ -34,7 +47,7 @@
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
             <div class="list-group list-group-flush my-3">
-                <a href="index.jsp" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="index.jsp" class="list-group-item list-group-item-action bg-transparent second-text "><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="locacoes.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-car me-2"></i>Locações</a>
@@ -44,8 +57,10 @@
                         class="fas fa-solid fa-user me-2"></i>Clientes</a>
                 <a href="funcionarios.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-user-tie me-2"></i>Funcionarios</a>
-                <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
                         class="fas fa-solid fa-file me-2"></i>Histórico</a>
+                <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
@@ -74,11 +89,11 @@
                 
                
                     
-                    <form action="" method="GET">
+                    <form action="" method="POST">
                <div class="container text-center bg-light p-2 rounded shadow-sm ">
                    <div class="row p-2">
                         <div class="col">
-                            <input type="text" class="form-control col-md-3" name="search" placeholder="Buscar Placa">
+                            <input type="text" class="form-control col-md-3 placa" name="search" placeholder="Buscar Placa">
                         </div>
                         <div class="col">
                             <select class="form-select" aria-label="Default select example" name="modelo">
@@ -152,28 +167,16 @@
                         <div class="form-group col-1 ">
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </div>
-                         <div class="form-group col-1 ">
-                             <a href="ServertRelatorio" class="btn btn-primary">Relatorio</a>
-                        </div>
-                        
-                        
-                          
-                    </div>        
-                            
+                    </div>     
                 </div>  
-                      
                   </form>
-                
                 </div>
-            
-                           
-                          
-                             
+              
         
         <!-- Inicio Tabela -->
                     <div class="row my-5 px-4">
-                        <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover table-striped ">
+                        <div class="table-responsive">
+                        <table class="table bg-white rounded shadow-sm  table-hover  ">
                             <thead>
                                 <tr>
                                     <th scope="col" width="50">#</th>
@@ -187,8 +190,7 @@
                                     <th scope="col">Valor Total</th>
                                     <th scope="col">Valor Pago</th>
                                     <th scope="col">Situação</th>
-                                    <th scope="col " width="50">Apagar</th>
-                                    <th scope="col " width="50" >Editar</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -217,7 +219,26 @@
                      ManterLocacoes daoLocacoes = new ManterLocacoes();
                      Locacoes loc = new Locacoes();
                      ArrayList<Locacoes> listaLoc;
+                     Decimal descFomart = new Decimal();
                      
+                     // Parametro para paginação
+                        int start;
+
+                            if(request.getParameter("page") == null){
+                                start = 0;
+                            } else{
+                                start = Integer.valueOf(request.getParameter("page"));
+                            }
+
+                            int totalRegistorPorPagina = 3;
+
+                            if(start ==1 || start ==0){
+                                start = 0;
+                            }
+                            else{
+                                start = start * totalRegistorPorPagina-3;
+                            }
+                     //Parametro para paginação
                      // pesquisar data de locações
                      String dataInicio = request.getParameter("dataLocacao");
                      String dataFinal = request.getParameter("dataTermino");
@@ -233,7 +254,7 @@
                      String corVeiculo = request.getParameter("corVeiculo"); 
                      String situacao = request.getParameter("situacao"); 
                      String searchBar = request.getParameter("search"); 
-                     String data = request.getParameter("data"); 
+      
                      String cliente = request.getParameter("cliente"); 
                     
                     
@@ -258,9 +279,9 @@
                                 vdataTerminoFormat = loc.getData_terminoFormat();
                                 vplaca = loc.getPlaca();
                                 vautomovel = loc.getModelo();
-                                vvalorDiaria =  String.valueOf(loc.getValor_diaria());
-                                vvalorTotal =   String.valueOf(loc.getValor_locacao());
-                                vvalorPago =    String.valueOf(loc.getValor_pago());
+                                vvalorDiaria =  String.valueOf(descFomart.getDecimalFormat(loc.getValor_diaria()));
+                                vvalorTotal =   String.valueOf(descFomart.getDecimalFormat(loc.getValor_locacao()));
+                                vvalorPago =    String.valueOf(descFomart.getDecimalFormat(loc.getValor_pago()));
                                 vstatusLocacao = loc.getStatusLocacoes();
                                 vCorLoc = loc.getCor();
                                 vVeiculoID = String.valueOf(loc.getPlaca_id());
@@ -276,19 +297,16 @@
                                     <td><%=vplaca%></td>
                                     <td><%=vautomovel%></td>
                                     <td><%=vCorLoc%></td>
-                                    <td>R$ <%=vvalorDiaria.replace(".", ",")%></td>
-                                    <td>R$ <%=vvalorTotal.replace(".", ",")%></td>
-                                    <td>R$ <%=vvalorPago.replace(".", ",")%></td>
+                                    <td>R$ <%=vvalorDiaria%></td>
+                                    <td>R$ <%=vvalorTotal%></td>
+                                    <td>R$ <%=vvalorPago%></td>
                                     <td ><%=vstatusLocacao%></td>
-                                    <td class=""><a href="DeletarLocacao?id=<%=vidLoc%>&idCar=<%=vVeiculoID%>" onclick="return confirm('Confirma exclusão do registro <%=vidLoc%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
-                                    <td><a href="#"data-bs-toggle="modal" data-bs-target="#modalEditar<%=vidLoc%>"><i class="fas fa-solid fa-pen me-2 d-flex justify-content-center"></i></a></td>
                                 </tr>
                                 <%  }} %>
                             </tbody>
                         </table>
-                           <a href="" class="btn btn-primary"><%=dataInicio%></a>
-                            <a href="" class="btn btn-primary"><%=dataFinal%></a>
-                            </div>
+                      </div>
+                              
                     </div>            
                    </div>  
                              </div> 
@@ -308,5 +326,19 @@
         
         
     </script>
+     <!--- Jquery e mascaras de campos --->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+    <script>
+        $('.money2').mask("#.##0,00", {reverse: true});
+        $('.cep').mask('00000-000');
+        $('.phone').mask('0000-0000');
+        $('.placa').mask('AAA-AAAA');
+        $('.phone_with_ddd').mask('(00) 00000-0000');
+        $('.mixed').mask('AAA 000-S0S');
+        $('.cpf').mask('000.000.000-00', {reverse: true});
+        $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+    </script>
+    <!--   -->
     </body>
 </html>

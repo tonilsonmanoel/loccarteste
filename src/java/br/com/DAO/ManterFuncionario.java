@@ -8,6 +8,7 @@ package br.com.DAO;
 import br.com.controle.Funcionario;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.management.Query;
 
 /**
  *
@@ -155,8 +156,95 @@ public class ManterFuncionario extends DAO{
         return null;
     }
     
+    public Funcionario recuperarSenha(String email){
+         Funcionario ntcben = new Funcionario();
+        
+        try {
+            abrirBanco();
+            String query = "SELECT * FROM funcionarios WHERE email = ?";
+            ps= con.prepareStatement(query);
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                ntcben.setCodigo(rs.getInt("id"));
+                ntcben.setNome(rs.getString("nome"));
+                ntcben.setCpf(rs.getString("cpf"));
+                ntcben.setEndereco(rs.getString("endereco"));
+                ntcben.setTelefone(rs.getString("telefone"));
+                ntcben.setCep(rs.getString("cep"));
+                ntcben.setEmail(rs.getString("email"));
+                ntcben.setSenha(rs.getString("senha"));
+                
+            }
+            fecharBanco();
+            return ntcben;
+           
+        } catch (Exception e) {
+            System.out.println("Erro" + e.getMessage());
+        }
+        return null;
+    }
     
-    
+     public void atualizarSenha(String senha,String codigo,String email){
+         
+        try {
+            abrirBanco();
+              String query = "UPDATE funcionarios SET senha = ? where codigoverificador = ? and email= ?";
+                ps = con.prepareStatement(query);
+                ps.setString(1, senha);
+                ps.setString(2, codigo);
+                ps.setString(3, email);
+                ps.executeUpdate();  
+                String query2 = "UPDATE funcionarios SET codigoverificador = Null where email= ?";
+                ps = con.prepareStatement(query2);
+                ps.setString(1, email);
+                ps.executeUpdate();  
+            fecharBanco();
+           
+        } catch (Exception e) {
+            System.out.println("Error"+e.getMessage());
+           
+        }
+        
+    } 
+    public void atualizarCodigoVerificador(String codigoVerificador,int id){
+       
+        
+        try {
+            abrirBanco();
+            String query = "UPDATE funcionarios SET codigoverificador = ? where id = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, codigoVerificador);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Error"+e.getMessage());
+        }
+        
+    } 
+      
+     public String codigoVerificadorEmail(String email){
+       
+        try {
+            abrirBanco();
+            String query = "SELECT * FROM funcionarios WHERE email = ?";
+            ps= con.prepareStatement(query);
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            String codigoVerificador = null;
+            while(rs.next()){
+                codigoVerificador =rs.getString("codigoverificador");
+            }
+            
+            fecharBanco();
+            return codigoVerificador;
+        } catch (Exception e) {
+            System.out.println("Error"+e.getMessage());
+            
+        }
+         return null;
+    } 
      public Funcionario totalFucnioario(){
         Funcionario func = new Funcionario();
         try {

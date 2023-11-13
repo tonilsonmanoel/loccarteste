@@ -1,6 +1,7 @@
 
-
 <%@page import="br.com.controle.Funcionario"%>
+<%@page import="br.com.controle.Marca"%>
+<%@page import="br.com.DAO.ManterMarca"%>
 <%@page import="br.com.DAO.ManterModelo"%>
 <%@page import="br.com.controle.Modelo"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,11 +20,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styles3.css" />
-    <title>Relatorio</title>
+    <title>Relatorio Funcionarios</title>
 </head>
 
 <body>
-     <%  
+    <%  
         Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
         System.out.print(user);
 
@@ -34,10 +35,8 @@
         
         if(user != null){}
     %>
-   
     <div class="d-flex" id="wrapper">
 
-         
 
         <!-- Sidebar -->
         <div class="bg-white" id="sidebar-wrapper">
@@ -85,11 +84,11 @@
                 
                 
                      <form action="ServertRelatorio" method="POST">
-                         <input hidden="true" name="tipoRelatorio" value="locacoesRelatorio">
+                      <input hidden="true" name="tipoRelatorio" value="funcionariosRelatorio">
                <div class="container text-center bg-light p-2 rounded shadow-sm ">
                    <div class="row p-1">
                        <div class="col">
-                           <h3 class="fs-3 mb-1 col ">Relatório</h3>
+                           <h3 class="fs-3 mb-1 col ">Relatório Funcionarios</h3>
                        </div>
                    </div>
                    
@@ -104,87 +103,24 @@
                      
                    </div>
                     
-                   <div class="row p-2">
+                   <div class="row  align-items-center p-2">
                        
-                        <div class="col">
-                            <select class="form-select" aria-label="Default select example" name="modelo">
-                               <option value="" selected>Automovel</option>
-                                <%  
-                                    String modeloNome = "";
-                                    String modeloId = "";
-                                    String marcasID = "";
-                                    String marcasNome="";
-                                    
-                                    ManterModelo modelodao = new ManterModelo();
-                                    Modelo modelo = new Modelo();
-                                    ArrayList<Modelo> arryModelo = modelodao.pesquisaTudoModelo();
-
-                                    for(int a = 0; a < arryModelo.size();a++){
-                                        modelo = arryModelo.get(a);
-                                        modeloNome = modelo.getNome();
-                                        modeloId = String.valueOf(modelo.getId());
-                                        marcasNome = String.valueOf(modelo.getMarca());
-                                %>
-                                        <option value="<%=modeloId%>">Modelo: <%=modeloNome%> | Marca: <%=marcasNome%></option>
-
-                                    <% } %>
-                            </select>
-                            
+                        <div class="col-8">
+                            <label >Mostrar somentes gestores:&nbsp; </label>
+                             <label>Sim</label>
+                             <input type="radio" name="locacoesAtiva" value="ALUGADO">
+                             <label>Não</label>
+                             <input type="radio" name="locacoesAtiva" value='NAO' checked>
                         </div>
-                        
-                              
-                            <div class="col">
-                                <select class="form-select"  name="situacao">
-                                    <option value="" selected>Situação</option>
-                                    <option value="ALUGADO">ALUGADO</option>
-                                      <option value="ENCERRADO">ENCERRADO</option>
-                                </select>
-                            </div>
-                            
-                        </div>
-                    <div class="row align-items-center  p-2">
-                            <div class="form-group  col">
-                                
-                                <label for="exampleInputText">Data Locação</label>
-                                <input type="date" class="form-control" name="dataLocacao" >
-                            </div>
-                            <div class="form-group  col">
-                                <label for="exampleInputText">Data Termino</label>
-                                <input type="date" class="form-control" name="dataTermino" >
-                            </div>
-                        
-                       
-                    </div> 
-                    <div class="row align-items-center p-2 d-flex justify-content-evenly">
-                        <div class="col">
-                            <select class="form-select" aria-label="Default select example" name="cliente">
-                                <option selected value="">Selecione Cliente</option>
-                                  <%
-                            String vid = "";
-                            String vnomeCliente = "";
-                            String vcpfCliente ="";
-                            ManterCliente dao = new ManterCliente();
-                            Cliente ca = new Cliente();
-
-                            ArrayList<Cliente> nt = dao.pesquisarTudoCliente();
-
-                            for(int i = 0; i < nt.size(); i++){
-                                ca = nt.get(i);
-                                vid = String.valueOf(ca.getCodigo());
-                                vnomeCliente = String.valueOf(ca.getNome());
-                                vcpfCliente = ca.getCpf();
-                
-                            
-                            %>
-                                <option value="<%=vid%>"><%=vnomeCliente%> | CPF: <%=vcpfCliente%></option>
-                                <% } %>
-                            </select>
-                        </div>
-                        <div class="form-group col ">
+                         <div class="form-group col ">
                             <button type="submit" class="btn btn-primary">Gerar Relatorio</button>
                         </div>
+                             
+                       
                         
+                            
                     </div>
+                   
                             
                 </div>
             </div>
@@ -205,6 +141,7 @@
         
         
     </script>
+   
     
 </body>
 
