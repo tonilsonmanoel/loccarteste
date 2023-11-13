@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Nov-2023 às 04:44
+-- Tempo de geração: 13-Nov-2023 às 18:38
 -- Versão do servidor: 5.5.27
 -- versão do PHP: 8.2.0
 
@@ -84,19 +84,21 @@ CREATE TABLE `funcionarios` (
   `telefone` varchar(20) DEFAULT NULL,
   `email` varchar(60) NOT NULL,
   `senha` varchar(45) NOT NULL,
-  `codigoverificador` varchar(10) DEFAULT NULL
+  `codigoverificador` varchar(10) DEFAULT NULL,
+  `perfil` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `funcionarios`
 --
 
-INSERT INTO `funcionarios` (`id`, `nome`, `cpf`, `endereco`, `cep`, `telefone`, `email`, `senha`, `codigoverificador`) VALUES
-(10, 'Administrador', '754.546.465-65', 'admin', '87651-222', '619865435', 'admin@admin.com', 'admin123', NULL),
-(4, 'Sheldon Cooper ', '076.245.744-03', 'QR 311 Cj 8 Lote  50', '7230710', '61983753644', 'shelson@gmail.com', 'tonix1999', NULL),
-(15, 'Tonilsonx', '888.55.44.56', 'QR 311 Conjunto 8', '72307-108', '61983753695', 'tonilsonx360@gmail.com', '@admin99', NULL),
-(7, 'Joao ', '122.255.255-55', 'QR 321 cj3', '72307108', '6198354653', 'joao2@gmail.com', 'joao123', NULL),
-(16, 'Tonilson Silva', '888554646', 'QR 311 Conjunto 8', '75333-555', '6198355466', 'tnnovidades@gmail.com', '@admin', '1004789');
+INSERT INTO `funcionarios` (`id`, `nome`, `cpf`, `endereco`, `cep`, `telefone`, `email`, `senha`, `codigoverificador`, `perfil`) VALUES
+(10, 'Administrador', '754.546.465-65', 'Teste', '87651-222', '(61) 98654-35', 'admin@admin.com', 'admin123', NULL, 1),
+(4, 'Sheldon Cooper ', '076.245.744-03', 'QR 311 Cj 8 Lote  50', '7230710', '61983753644', 'shelson@gmail.com', 'tonix1999', NULL, NULL),
+(15, 'Tonilsonx', '888.55.44.56', 'QR 311 Conjunto 8', '72307-108', '61983753695', 'tonilsonx360@gmail.com', '@admin99', '239082', NULL),
+(7, 'Joao ', '122.255.255-55', 'QR 321 cj3', '72307108', '6198354653', 'joao2@gmail.com', 'joao123', NULL, NULL),
+(16, 'Tonilson Silva', '888554646', 'QR 311 Conjunto 8', '75333-555', '6198355466', 'tnnovidades@gmail.com', '@admin', '1004789', NULL),
+(17, 'Admin2', '854.654.654-65', 'QR 211', '85633-265', '(56) 54654-6546', 'admin2@admin2.com', 'admin', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -284,7 +286,7 @@ ALTER TABLE `cores`
 -- AUTO_INCREMENT de tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `locacoes`

@@ -19,7 +19,7 @@ public class ManterFuncionario extends DAO{
     public void cadastrarFuncionario(Funcionario c){
          try {
              abrirBanco();
-             String query = "INSERT INTO funcionarios(id,nome,cpf,endereco,cep,telefone,email,senha) values(null,?,?,?,?,?,?,?) ";
+             String query = "INSERT INTO funcionarios(id,nome,cpf,endereco,cep,telefone,email,senha,perfil) values(null,?,?,?,?,?,?,?,?) ";
              ps = con.prepareStatement(query);
              ps.setString(1,c.getNome());
              ps.setString(2, c.getCpf());
@@ -28,6 +28,7 @@ public class ManterFuncionario extends DAO{
              ps.setString(5, c.getTelefone());
              ps.setString(6, c.getEmail());
              ps.setString(7, c.getSenha());
+             ps.setInt(8, c.getPerfil());
              ps.execute();
              
              fecharBanco();
@@ -52,7 +53,7 @@ public class ManterFuncionario extends DAO{
     public void editaFuncionario(Funcionario c){
         try {
             abrirBanco();
-            String query="UPDATE funcionarios set nome =?, cpf =?, endereco = ?,cep = ?, telefone=?, email= ?,senha= ?  where id=?";
+            String query="UPDATE funcionarios set nome =?, cpf =?, endereco = ?,cep = ?, telefone=?, email= ?, perfil=?  where id=?";
             ps= con.prepareStatement(query);
             ps.setString(1, c.getNome());
             ps.setString(2, c.getCpf());
@@ -60,7 +61,7 @@ public class ManterFuncionario extends DAO{
             ps.setString(4, c.getCep());
             ps.setString(5,c.getTelefone());
             ps.setString(6, c.getEmail());
-            ps.setString(7, c.getSenha());
+            ps.setInt(7, c.getPerfil());
             ps.setInt(8, c.getCodigo());
             ps.executeUpdate();
             fecharBanco();
@@ -87,6 +88,7 @@ public class ManterFuncionario extends DAO{
                func.setTelefone(rs.getString("telefone"));
                func.setEmail(rs.getString("email"));
                func.setSenha(rs.getString("senha"));
+               func.setPerfil(rs.getInt("perfil"));
                lista.add(func);
             }
             fecharBanco();
@@ -116,6 +118,7 @@ public class ManterFuncionario extends DAO{
                func.setTelefone(rs.getString("telefone"));
                func.setEmail(rs.getString("email"));
                func.setSenha(rs.getString("senha"));
+               func.setPerfil(rs.getInt("perfil"));
                lista.add(func);
             }
             fecharBanco();
@@ -145,6 +148,7 @@ public class ManterFuncionario extends DAO{
                 ntcben.setCep(rs.getString("cep"));
                 ntcben.setEmail(rs.getString("email"));
                 ntcben.setSenha(rs.getString("senha"));
+                ntcben.setPerfil(rs.getInt("perfil"));
                 
             }
             fecharBanco();
@@ -174,7 +178,7 @@ public class ManterFuncionario extends DAO{
                 ntcben.setCep(rs.getString("cep"));
                 ntcben.setEmail(rs.getString("email"));
                 ntcben.setSenha(rs.getString("senha"));
-                
+                ntcben.setPerfil(rs.getInt("perfil"));
             }
             fecharBanco();
             return ntcben;

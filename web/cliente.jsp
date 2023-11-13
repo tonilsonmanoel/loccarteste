@@ -111,7 +111,7 @@
                 <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-file me-2"></i>Histórico</a>
                         <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
+                        class="fas fa-solid fa-file-invoice me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>

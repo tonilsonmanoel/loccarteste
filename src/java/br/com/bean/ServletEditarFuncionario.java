@@ -45,7 +45,7 @@ public class ServletEditarFuncionario extends HttpServlet {
             String email = request.getParameter("email");
             String cep = request.getParameter("cep");
             String senha = request.getParameter("senha");
-            
+            int perfil =  Integer.valueOf(request.getParameter("perfil"));
             Funcionario cl = new Funcionario();
             cl.setCodigo(id);
             cl.setNome(nome);
@@ -55,6 +55,10 @@ public class ServletEditarFuncionario extends HttpServlet {
             cl.setSenha(senha);
             cl.setEndereco(endereco);
             cl.setCep(cep);
+            cl.setPerfil(perfil);
+            
+            System.out.println(perfil);
+            System.out.println( cl.getPerfil());
             
             ManterFuncionario dao = new ManterFuncionario();
             dao.editaFuncionario(cl);

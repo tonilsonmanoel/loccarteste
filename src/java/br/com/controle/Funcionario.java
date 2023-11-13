@@ -10,7 +10,15 @@ package br.com.controle;
  * @author Tonilson
  */
 public class Funcionario {
-    int codigo;
+    int codigo,perfil;
+
+    public int getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(int perfil) {
+        this.perfil = perfil;
+    }
     String nome,cpf,endereco,cep,telefone,email,senha;
 
     public int getCodigo() {

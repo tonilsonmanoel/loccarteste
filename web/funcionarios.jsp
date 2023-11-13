@@ -33,9 +33,12 @@
         if(user == null){
               Thread.sleep(500);
               response.sendRedirect("login.jsp?alert=1");
+        } else if(user.getPerfil() != 1){
+             Thread.sleep(500);
+             response.sendRedirect("index.jsp?alert2=2");
         }
         
-        if(user != null){}
+      
     %>
     <div class="d-flex" id="wrapper">
 
@@ -77,11 +80,22 @@
                             <input type="text" class="form-control" name="senha" placeholder="Insira a senha" required>
                             </div>
                         </div>
-                        <div class="form-group margin-input col">
-                            <label for="exampleInputText">Cep</label>
-                            <input type="text" class="form-control cep" name="cep" placeholder="88888-888" required>
-                            </div>
-                       
+                        <div class="row">
+                            <div class="form-group margin-input col">
+                                <label for="exampleInputText">Cep</label>
+                                <input type="text" class="form-control cep" name="cep" placeholder="88888-888" required>
+                            </div> 
+                            <div class="form-group margin-input col">
+                                <label for="exampleInputText">Perfil</label>
+                                 <select class="form-select" aria-label="Default select example" name="perfil" required>
+                                 <option value="" selected>Selecionar Perfil</option>
+                                 <option value="0" >Colaborador</option>
+                                 <option value="1" >Gestor</option>
+                            </select> 
+                                
+                            </div> 
+                        </div>
+                      
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -116,7 +130,7 @@
                          <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-file me-2"></i>Histórico</a>
                 <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
+                        class="fas fa-solid fa-file-invoice me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold "><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
@@ -177,8 +191,8 @@
                                     <th scope="col">Endereco</th>
                                     <th scope="col">Telefone</th>
                                     <th scope="col">Email</th>
-                                    
                                     <th scope="col">CEP</th>
+                                    <th scope="col">Perfil</th>
                                     <th scope="col">Apagar</th>
                                     <th scope="col">Editar</th>
                                 </tr>
@@ -193,6 +207,8 @@
             String vemail = "";
             String vcep = "";
             String vsenha ="";
+            String vperfil ="";
+            String vperfilString ="";
             
             ManterFuncionario dao =new ManterFuncionario();
             Funcionario ca = new Funcionario();
@@ -228,7 +244,17 @@
                 vemail = ca.getEmail();
                 vendereco = ca.getEndereco();
                 vcep = String.valueOf(ca.getCep());
-               
+                vperfil = String.valueOf(ca.getPerfil());
+                
+                
+                if(vperfil.equals("0")){
+                     vperfilString = "Colaborador";
+                } else {
+                     vperfilString = "Gestor";
+                }
+                 
+                 
+                    
                                                                     %>
                                 <tr>
                                     <th scope="row"><%=vid%></th>
@@ -237,8 +263,8 @@
                                     <td><%=vendereco%></td>
                                     <td><%=vtelefone%></td>
                                     <td><%=vemail%></td>
-                                
                                     <td><%=vcep%></td>
+                                    <td><%=vperfilString%></td>
                                     <td class=""><a href="DeletarFuncionario?id=<%=vid%>" onclick="return confirm('Confirma exclusão do registro <%=vnome%>?')"><i class="fas fa-solid fa-trash me-2 d-flex justify-content-center " style="color: #ff0000;"></i></a></td>
                                     <td><a href="#"data-bs-toggle="modal" data-bs-target="#modalEditar<%=vid%>"><i class="fas fa-solid fa-pen me-2 d-flex justify-content-center"></i></a></td>
                                 </tr>
@@ -283,13 +309,25 @@
                                                     <input type="email" class="form-control" name="email" value="<%=vemail%>" required>
                                                     </div>
                                                     <div class="form-group margin-input col">
-                                                    <label for="exampleInputText">Senha</label>
-                                                    <input type="text" class="form-control" name="senha" value="<%=vsenha%>" required>
-                                                    </div>
+                                                        <label for="exampleInputText">Cep</label>
+                                                        <input type="text" class="form-control cep" name="cep" value="<%=vcep%>"  placeholder="88888-888" required>
+                                                    </div> 
                                                 </div>
-                                                <div class="form-group margin-input col">
-                                                <label for="exampleInputText">Cep</label>
-                                                <input type="text" class="form-control cep" name="cep" value="<%=vcep%>" required>
+                                                <div class="row">
+                                                    <div class="form-group margin-input col">
+                                                        <label for="exampleInputText">Perfil</label>
+                                                         <select class="form-select" aria-label="Default select example" name="perfil" required>
+                                                            <option value="<%=vperfil%>"><%=vperfilString%></option>
+                                                            <%if(vperfil.equals("0")) {  %>
+                                                                <option value="1" >Gestor</option>
+                                                            <% } else {%>
+                                                                <option value="0" >Colaborador</option>
+                                                            <% }%>
+                                                        </select> 
+                                                    </div> 
+                                                    <div class="form-group margin-input col"></div> 
+                                                      
+                                                    
                                                 </div>
 
                                         </div>

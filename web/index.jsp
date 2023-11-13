@@ -25,20 +25,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styles3.css" />
     <title>Index</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <%  
         Funcionario user = (Funcionario) session.getAttribute("usuarioLogado");
-        System.out.print(user);
-
+        String alert2 = request.getParameter("alert2");
+        
         if(user == null){
               Thread.sleep(500);
               response.sendRedirect("login.jsp?alert=1");
         }
-        
-        if(user != null){}
     %>
+    
+     <% if(alert2 != null){  %>
+        <script>
+                 function alertDial1(){
+                     Swal.fire({
+                      position: "top-end",
+                      text: "Sem permissão suficiente para acessar essa página",
+                      showConfirmButton: false,
+                      timer: 1500
+                      });
+                }
+                 window.onload = function (){
+                     alertDial1();
+                 } ;
+         </script>
+    <% } %>
    
     <div class="d-flex" id="wrapper">
 
@@ -227,7 +242,7 @@
                 <a href="historico.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-file me-2"></i>Histórico</a>
                 <a href="relatorio.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-solid fa-file me-2"></i>Relatório</a>
+                        class="fas fa-solid fa-file-invoice me-2"></i>Relatório</a>
                 <a href="remover.jsp" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>

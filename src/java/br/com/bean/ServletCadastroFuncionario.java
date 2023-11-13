@@ -43,7 +43,7 @@ public class ServletCadastroFuncionario extends HttpServlet {
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             String cep = request.getParameter("cep");
-            
+            int perfil =  Integer.valueOf(request.getParameter("perfil"));
             Funcionario ca = new Funcionario();
             ManterFuncionario dao = new ManterFuncionario();
             
@@ -54,7 +54,7 @@ public class ServletCadastroFuncionario extends HttpServlet {
             ca.setEmail(email);
             ca.setCep(cep);
             ca.setSenha(senha);
-            
+            ca.setPerfil(perfil);
             dao.cadastrarFuncionario(ca);
             
             RequestDispatcher rd = request.getRequestDispatcher("funcionarios.jsp");

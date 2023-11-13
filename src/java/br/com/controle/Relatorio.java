@@ -485,7 +485,7 @@ public class Relatorio {
 
            
            
-           float locTableColWidth[] = {100,200,200,200,200,200,200};
+           float locTableColWidth[] = {100,200,200,200,200,200,200,200};
            
            Table locTable = new Table(locTableColWidth);
          
@@ -517,6 +517,10 @@ public class Relatorio {
            .setBackgroundColor(new DeviceRgb(65,169,219))
            .setFontColor(Color.WHITE)
            .setFontSize(12));
+           locTable.addCell(new Cell().add("Perfil")
+           .setBackgroundColor(new DeviceRgb(65,169,219))
+           .setFontColor(Color.WHITE)
+           .setFontSize(12));
            
            
            // criação tabela Locações do Relatorio 
@@ -531,6 +535,14 @@ public class Relatorio {
           
            for(int a = 0; a < listFuncionario.size(); a++){
                func= listFuncionario.get(a);
+                String perfilString = "";
+                if(func.getPerfil() == 0){
+                    perfilString = "Colaborador";
+                }else{
+                    perfilString = "Gestor";
+                }
+               
+               
                 locTable.addCell(new Cell().add(String.valueOf(func.getCodigo())).setFontSize(10));
                 locTable.addCell(new Cell().add(func.getNome()).setFontSize(10));
                 locTable.addCell(new Cell().add(func.getCpf()).setFontSize(10));
@@ -538,7 +550,7 @@ public class Relatorio {
                 locTable.addCell(new Cell().add(func.getEmail()).setFontSize(10));
                 locTable.addCell(new Cell().add(func.getEndereco()).setFontSize(10));
                 locTable.addCell(new Cell().add(func.getCep()).setFontSize(10));
-                
+                locTable.addCell(new Cell().add(perfilString).setFontSize(10));
                 ContadorRegisto +=1;
                
            }
