@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles3.css" />
+    <link rel="stylesheet" href="css/styles4.css" />
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
     <title>Funcionarios</title>
 </head>
 
@@ -113,9 +114,10 @@
 
         <!-- Sidebar -->
          <div class="bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
-                    class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
-            <div class="list-group list-group-flush my-3">
+             <div class="sidebar-heading text-center primary-text fs-4 fw-bold text-uppercase border-bottom">
+                <img src="image/logoLocCar.jpg" height="100" width="200" class="img-fluid" >
+            </div>
+            <div class="list-group list-group-flush my-1">
                 <a href="index.jsp" class="list-group-item list-group-item-action bg-transparent second-text "><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="locacoes.jsp" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
@@ -178,7 +180,7 @@
                 
                 <div class="row my-5 ">
                     <div class="row position-relative">
-                        <h3 class="fs-4 mb-3 text-success">Funcionarios</h3>
+                        <h3 class="fs-4 mb-3 text-primary">Funcionarios</h3>
                         <button type="button" class="btn btn-primary  botao_cadastrar position-absolute top-50 end-0 translate-middle-y " data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
                     </div>
                     <div class="table-responsive">

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/stylesLogin2.css" />
+    <link rel="stylesheet" href="css/stylesLogin4.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
     <title>Login</title>
@@ -55,10 +55,13 @@
             } ;
         </script>
     <% } %>
-    <div class="login shadow-lg p-3 container-fluid bg-white rounded-25">
-        <div class="sidebar-heading text-center py-4 primary-text fs-2 fw-bold text-uppercase"><i
-                    class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
-        <h1 class="text-center">Login</h1>
+    <div class="login shadow-lg p-3 container-fluid bg-white rounded-25 position-absolute top-50 start-50 translate-middle">
+        <div class="sidebar-heading text-center primary-text fs-2 fw-bold text-uppercase">
+            <img src="image/logoLocCar.jpg" height="100" width="200" class="img-fluid" >
+       </div>
+        <div class="sidebar-heading text-center primary-text fs-2 fw-bold text-uppercase">
+            <img src="image/login.png" height="100" width="200" class="img-fluid" >
+       </div>
         
         <form class="needs-validation" action="Login" method="POST">
             
@@ -77,7 +80,7 @@
                 </div>
             </div>
             
-            <input class="btn btn-success w-100 p-1" type="submit" value="ENTRAR">
+            <input class="btn btn-primary w-100 p-1" type="submit" value="ENTRAR">
             <p class="text-center  m-1">Esqueceu senha?<a href="esqueceusenha.jsp" class="text-decoration-none  text-danger"> Clique aqui</a></p>
         </form>
 

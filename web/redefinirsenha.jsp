@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body class="position-relative">
      <%  
        
         String alertNaoAutorizado = (String) request.getAttribute("naoautorizado");
@@ -34,10 +34,13 @@
     </script>
     <% } %>
     
-    <div class="login shadow-lg p-3 mb-5 bg-white rounded-25">
-        <div class="sidebar-heading text-center  primary-text fs-2 fw-bold text-uppercase"><i
-                    class="fas fa-solid fa-car-side me-2"></i>LOCCAR</div>
-        <h1 class="text-center">Redefinir Senha</h1>
+    <div class="login shadow-lg p-3 mb-5 bg-white rounded-25 position-absolute top-50 start-50 translate-middle">
+         <div class="sidebar-heading text-center primary-text fs-2 fw-bold text-uppercase">
+            <img src="image/logoLocCar.jpg" height="100" width="200" class="img-fluid" >
+       </div>
+        <div class="sidebar-heading text-center py-1 primary-text fs-2 fw-bold text-uppercase">
+            <img src="image/redefinirsenha.png" height="100" width="400" class="img-fluid" >
+       </div>
         
         <form class="needs-validation" action="RedefinirSenha" method="POST">
              <div class="form-group was-validated">
@@ -62,7 +65,7 @@
                 </div>
             </div>
           
-            <input class="btn btn-success w-100" type="submit" value="Continuar">
+            <input class="btn btn-primary w-100" type="submit" value="Continuar">
         </form>
 
     </div>
